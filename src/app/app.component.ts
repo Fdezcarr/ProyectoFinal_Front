@@ -1,13 +1,24 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+    selector: 'app-root',
+    standalone: true,
+    imports: [RouterOutlet],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.css',
 })
 export class AppComponent {
-  title = 'Proyecto';
+    title = 'Proyecto';
+
+    router = inject(Router)
+
+    ngOnInit() {
+        const token = localStorage.getItem('token');
+        if (token) {
+            this.router.navigate(['/dashboard']);
+        } else {
+            this.router.navigate(['/login']);
+        }
+    }
 }

@@ -1,0 +1,283 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4">
+            <h1 class="mb-4">Buenos días, {{ this.nameUser }}</h1>
+            <!-- Notificaciones -->
+            <!-- <div
+                class="alert alert-success d-flex justify-content-between align-items-center"
+            >
+                <span>3 pedidos han sido completados</span>
+                <button type="button" class="btn-close"></button>
+            </div>
+            <div
+                class="alert alert-info d-flex justify-content-between align-items-center"
+            >
+                <span>7 pedidos requieren de tu atención</span>
+                <button type="button" class="btn-close"></button>
+            </div> -->
+        </div>
+        <!-- Últimos pedidos -->
+        <div class="col-md-8">
+            <h2 class="mb-3">Últimos pedidos</h2>
+            <table class="table table-bordered">
+                <thead class="table-light">
+                    <tr>
+                        <th>Origen</th>
+                        <th>Destino</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                        <th>Matrícula</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let pedido of pedidos">
+                        <td>{{ pedido.origen }}</td>
+                        <td>{{ pedido.destino }}</td>
+                        <td>{{ pedido.fecha_salida }}</td>
+                        <td>
+                          
+                            <app-selector-estado [pedido]="pedido"></app-selector-estado>
+                        </td>
+                        <td>{{ pedido.matricula_camion }}</td>
+                        <td>
+                            <button
+                                class="btn btn-sm btn-primary mx-1"
+                                (click)="openModalDetails(pedido.id)"
+                            >
+                                Ver
+                            </button>
+                            <button
+                                type="button"
+                                class="btn btn-sm btn-warning mx-1"
+                                data-bs-toggle="modal"
+                                data-bs-target="#modalEdit"
+                                (click)="openModalEdit(pedido.id)"
+                            >
+                                Editar
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Pedidos activos -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <h2 class="mb-3">Todos los pedidos</h2>
+            <table class="table table-bordered">
+                <thead class="table-light">
+                    <tr>
+                        <th>Origen</th>
+                        <th>Destino</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                        <th>Matrícula</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let pedido of pedidos">
+                        <td>{{ pedido.origen }}</td>
+                        <td>{{ pedido.destino }}</td>
+                        <td>{{ pedido.fecha_salida }}</td>
+                        <td>
+                            <span
+                                class="badge bg-info text-dark"
+                                [ngClass]="getUserStatus(pedido.estado)"
+                                >{{ getEstadoKey(pedido.estado) }}</span
+                            >
+                        </td>
+                        <td>{{ pedido.matricula_camion }}</td>
+                        <td>
+                            <button
+                                class="btn btn-sm btn-primary mx-1"
+                                (click)="openModalDetails(pedido.id)"
+                            >
+                                Ver
+                            </button>
+                            <button
+                                type="button"
+                                class="btn btn-sm btn-warning mx-1"
+                                data-bs-toggle="modal"
+                                data-bs-target="#modalEdit"
+                                (click)="openModalEdit(pedido.id)"
+                            >
+                                Editar
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal details -->
+<div
+    class="modal fade"
+    id="modalDetails"
+    data-bs-backdrop="true"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="modalDetailsLabel"
+    aria-hidden="true"
+>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="modalDetailsLabel">
+                    Detalles del pedido
+                </h1>
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                    (click)="closeModal()"
+                ></button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Origen</th>
+                            <th scope="col">Destino</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Matrícula</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ this.pedido?.origen }}</td>
+                            <td>{{ this.pedido?.destino }}</td>
+                            <td>{{ this.pedido?.fecha_salida }}</td>
+                            <td>{{ this.pedido?.estado }}</td>
+                            <td>{{ this.pedido?.matricula_camion }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                    (click)="closeModal()"
+                >
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal edit -->
+<div
+    class="modal fade"
+    id="modalEdit"
+    data-bs-backdrop="true"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="modalEditLabel"
+    aria-hidden="true"
+>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="modalEditLabel">
+                    Editar pedido
+                </h1>
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                    (click)="closeModal()"
+                ></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="origen" class="form-label">Origen</label>
+                        <input
+                            type="email"
+                            class="form-control"
+                            id="origen"
+                            [value]="this.pedido.origen"
+                            [(ngModel)]="this.pedido.origen"
+                            [ngModelOptions]="{ standalone: true }"
+                        />
+                    </div>
+                    <div class="mb-3">
+                        <label for="destino" class="form-label">Destino</label>
+                        <input
+                            type="email"
+                            class="form-control"
+                            id="destino"
+                            [value]="this.pedido.destino"
+                            [(ngModel)]="this.pedido.destino"
+                            [ngModelOptions]="{ standalone: true }"
+                        />
+                    </div>
+                    <div class="mb-3">
+                        <label for="matricula_camion" class="form-label"
+                            >Matricula</label
+                        >
+                        <input
+                            type="email"
+                            class="form-control"
+                            id="matricula_camion"
+                            [value]="this.pedido.matricula_camion"
+                            [(ngModel)]="this.pedido.matricula_camion"
+                            [ngModelOptions]="{ standalone: true }"
+                        />
+                    </div>
+                    <div class="mb-3">
+                        <label for="estado" class="form-label">Estado</label>
+                        <select
+                            id="estado"
+                            class="form-select"
+                            aria-label="Default select example"
+                            [value]="this.pedido.estado"
+                            [(ngModel)]="this.pedido.estado"
+                            [ngModelOptions]="{ standalone: true }"
+                        >
+                            <option value="pendiente_de_pago">
+                                Pendiente de pago
+                            </option>
+                            <option value="aceptado">Aceptado</option>
+                            <option value="cancelado">Cancelado</option>
+                            <option value="en_revision">En revisión</option>
+                            <option value="pendiente_de_envio">
+                                Pendiente de envío
+                            </option>
+                            <option value="enviado">Enviado</option>
+                            <option value="entregado">Entregado</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                    (click)="closeModal()"
+                >
+                    Cerrar
+                </button>
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                    (click)="guardarPedido()"
+                >
+                    Guardar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

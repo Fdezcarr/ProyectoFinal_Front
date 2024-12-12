@@ -1,1 +1,30 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css');
+
+body {
+    overflow-y: auto !important;
+    background-color: #f8f8f8 !important;
+}
+
+nav.bg-dark-subtle, footer.bg-dark-subtle {
+    background-color: #e9e9e9 !important;
+}
+
+.alert-success {
+    --bs-alert-bg: #a2d7bf !important;
+}
+
+.alert-info {
+    --bs-alert-bg: #96e2f2 !important;
+}
+
+span.bg-warning {
+    background-color: #f7df25 !important;
+}
+
+span.bg-success {
+    background-color: #1ca163 !important;
+}
+
+.btn.btn-outline-primary {
+    --bs-btn-color: #0d6efd !important;
+}

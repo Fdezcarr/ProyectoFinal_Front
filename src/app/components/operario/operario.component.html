@@ -1,0 +1,128 @@
+<div class="container my-4">
+    <h1 class="text-center mb-4">Gestión de Pedidos</h1>
+
+    <!-- Formulario para crear un nuevo pedido -->
+    <div class="row mb-4">
+        <div class="col">
+            <h3>Crear Nuevo Pedido</h3>
+            <form (ngSubmit)="crearPedido()">
+                <div class="mb-3">
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="nombre"
+                        [(ngModel)]="nuevoPedido.nombre"
+                        name="nombre"
+                        required
+                    />
+                </div>
+                <div class="mb-3">
+                      <label for="origen" class="form-label">Origen</label>
+                    <app-selector-almacen [id]="'origen'"></app-selector-almacen>
+                </div>
+                <div class="mb-3">
+                    <label for="destino" class="form-label">Destino</label>
+                    <app-selector-almacen [id]="'destino'"></app-selector-almacen>
+                </div>
+                <div class="mb-3">
+                    <label for="fecha" class="form-label">Fecha</label>
+                    <input
+                        type="date"
+                        class="form-control"
+                        id="fecha"
+                        [(ngModel)]="nuevoPedido.fecha"
+                        name="fecha"
+                        required
+                    />
+                </div>
+                <div class="mb-3">
+                    <label for="estado" class="form-label">Estado</label>
+                    <select
+                        class="form-select"
+                        id="estado"
+                        [(ngModel)]="nuevoPedido.estado"
+                        name="estado"
+                        required
+                    >
+                        <option value="Pendiente">Pendiente</option>
+                        <option value="En proceso">En proceso</option>
+                        <option value="Completado">Completado</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="contacto" class="form-label">Contacto</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="contacto"
+                        [(ngModel)]="nuevoPedido.contacto"
+                        name="contacto"
+                    />
+                </div>
+                <button type="submit" class="btn btn-success">
+                    Añadir Pedido
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Tabla de pedidos -->
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Origen</th>
+                <th scope="col">Destino</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Contacto</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let tarea of tareas">
+                <td>{{ tarea.id }}</td>
+                <td>{{ tarea.nombre }}</td>
+                <td>{{ tarea.origen }}</td>
+                <td>{{ tarea.destino }}</td>
+                <td>
+                    <span
+                        class="badge"
+                        [ngClass]="{
+                            'bg-warning text-dark':
+                                tarea.estado === 'Pendiente',
+                            'bg-primary': tarea.estado === 'En proceso',
+                            'bg-success': tarea.estado === 'Completado',
+                        }"
+                    >
+                        {{ tarea.estado }}
+                    </span>
+                </td>
+                <td>{{ tarea.fecha | date: 'short' }}</td>
+                <td>{{ tarea.contacto }}</td>
+                <td>
+                    <button
+                        class="btn btn-sm btn-info me-2"
+                        (click)="actualizarEstado(tarea, 'En proceso')"
+                    >
+                        En proceso
+                    </button>
+                    <button
+                        class="btn btn-sm btn-success me-2"
+                        (click)="actualizarEstado(tarea, 'Completado')"
+                    >
+                        Completado
+                    </button>
+                    <button
+                        class="btn btn-sm btn-danger"
+                        (click)="eliminarTarea(tarea.id)"
+                    >
+                        Eliminar
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
