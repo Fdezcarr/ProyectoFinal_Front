@@ -106,6 +106,11 @@ export class JefeComponent implements OnInit {
             alert('Por favor, selecciona un almacén antes de guardar.');
             return;
         }
+        
+        if (!this.usuarioSeleccionado.rol) {
+            alert('Por favor, selecciona un rol antes de guardar.');
+            return;
+        }
 
 
         this.usuarioService
@@ -115,6 +120,7 @@ export class JefeComponent implements OnInit {
 
                     this.cargarUsuarios();
                     this.usuarioSeleccionado = null;
+                    alert('Usuario actualizado con éxito');
                 },
                 (error) => {
 

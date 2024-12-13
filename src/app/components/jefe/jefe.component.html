@@ -84,7 +84,13 @@
             <input [(ngModel)]="usuarioSeleccionado.nombre" class="form-control" placeholder="Nombre" />
             <input [(ngModel)]="usuarioSeleccionado.apellido" class="form-control" placeholder="Apellido" />
             <input [(ngModel)]="usuarioSeleccionado.email" class="form-control" placeholder="Email" />
-
+            
+            <select [(ngModel)]="usuarioSeleccionado.rol" class="form-select">
+                <option value="" disabled>Seleccione un rol</option>
+                <option value="admin">Administrador</option>
+                <option value="jefe">Jefe</option>
+                <option value="operario">Operario</option>
+            </select>
 
             <select [(ngModel)]="usuarioSeleccionado.almacenId" class="form-select">
                 <option value="" disabled selected>Seleccione un almacén</option>
