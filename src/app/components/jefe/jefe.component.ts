@@ -18,9 +18,9 @@ export class JefeComponent implements OnInit {
         nombre: '',
         apellido: '',
         email: '',
-        password: '0000',
+        password: '',
         rol: '',
-        almacenId: null,
+        almacen_id: null,
     };
     nuevoAlmacen: any = { nombre: '', localizacion: '' };
     almacenSeleccionado: any = null;
@@ -30,7 +30,7 @@ export class JefeComponent implements OnInit {
     constructor(
         private usuarioService: UsuarioService,
         private almacenService: AlmacenService
-    ) { }
+    ) {}
 
     ngOnInit(): void {
         this.cargarUsuarios();
@@ -71,8 +71,10 @@ export class JefeComponent implements OnInit {
             return;
         }
 
-        if (!this.nuevoUsuario.almacenId) {
-            alert('Por favor, selecciona un almacén antes de crear el usuario.');
+        if (!this.nuevoUsuario.almacen_id) {
+            alert(
+                'Por favor, selecciona un almacén antes de crear el usuario.'
+            );
             return;
         }
 
@@ -82,9 +84,9 @@ export class JefeComponent implements OnInit {
                 nombre: '',
                 apellido: '',
                 email: '',
-                password: '0000',
+                password: '',
                 rol: '',
-                almacenId: null,
+                almacen_id: null,
             };
         });
     }
@@ -98,38 +100,39 @@ export class JefeComponent implements OnInit {
 
     abrirModalUsuario(usuario: any): void {
         this.usuarioSeleccionado = { ...usuario };
+        //NANANNANANA
     }
 
     guardarUsuarioEditado(): void {
-
-        if (!this.usuarioSeleccionado.almacenId) {
+        if (!this.usuarioSeleccionado.almacen_id) {
             alert('Por favor, selecciona un almacén antes de guardar.');
             return;
         }
-        
+
         if (!this.usuarioSeleccionado.rol) {
             alert('Por favor, selecciona un rol antes de guardar.');
             return;
         }
 
-
-        this.usuarioService
-            .editarUsuario(this.usuarioSeleccionado)
-            .subscribe(
-                () => {
-
-                    this.cargarUsuarios();
-                    this.usuarioSeleccionado = null;
-                    alert('Usuario actualizado con éxito');
-                },
-                (error) => {
-
-                    console.error('Error al actualizar usuario:', error);
-                    alert('Hubo un problema al guardar los cambios. Por favor, inténtalo de nuevo.');
-                }
-            );
+        this.usuarioService.editarUsuario(this.usuarioSeleccionado).subscribe(
+            () => {
+                this.cargarUsuarios();
+                this.usuarioSeleccionado = null;
+                alert('Usuario actualizado con éxito');
+            },
+            (error) => {
+                console.error('Error al actualizar usuario:', error);
+                alert(
+                    'Hubo un problema al guardar los cambios. Por favor, inténtalo de nuevo.'
+                );
+            }
+        );
     }
 
+    selectUsuarioRol(event: Event) {
+        const target = event.target as HTMLSelectElement;
+        this.nuevoUsuario.almacen_id = target.value;
+    }
 
     abrirModalAlmacen(almacen: any): void {
         this.almacenSeleccionado = { ...almacen };

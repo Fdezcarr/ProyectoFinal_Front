@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AlmacenService } from '../../services/almacen.service';
 import { SelectorAlmacenComponent } from '../selector-almacen/selector-almacen.component';
-
 @Component({
     selector: 'app-operario',
     standalone: true,
