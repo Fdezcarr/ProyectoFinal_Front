@@ -1,10 +1,11 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { Status } from '../../interfaces/pedido.interface';
 import { CommonModule } from '@angular/common';
 import { Pedido } from '../../interfaces/pedido.interface';
 import { PedidosService } from '../../services/orders.service';
 import { FormsModule } from '@angular/forms';
 import { SelectorEstadoComponent } from '../selector-estado/selector-estado.component';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'app-encargado',
@@ -19,15 +20,12 @@ export class EncargadoComponent {
     pedido: Pedido;
     pedidosRecientes: Pedido[] = [];
 
-    constructor(private pedidoService: PedidosService) {
-        this.pedido = {
-            origen: '',
-            destino: '',
-            matricula_camion: '',
-            estado: Status['Pendiente de pago'],
-            fecha_salida: '',
-        };
-        this.pedidoService.getAllPedidos().subscribe({
+    authService = inject(AuthService);
+
+    ngOnInit() {
+        const {id}: any = this.authService.getUser();
+        console.log(id);
+        this.pedidoService.getAllMyPedidos(id).subscribe({
             next: (response) => {
                 this.pedidos = response.map((pedido) => ({
                     ...pedido,
@@ -36,6 +34,16 @@ export class EncargadoComponent {
                 this.filterPedidosRecientes();
             },
         });
+    }
+
+    constructor(private pedidoService: PedidosService) {
+        this.pedido = {
+            origen: '',
+            destino: '',
+            matricula_camion: '',
+            estado: Status['Pendiente de pago'],
+            fecha_salida: '',
+        };
     }
 
     // Formateamos la fecha al formato español 'dd/mm/yyyy'

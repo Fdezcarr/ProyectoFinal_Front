@@ -55,4 +55,9 @@ export class AuthService {
             return null;
         }
     }
+
+    getUserId(): number {
+        const user = this.getUser(); 
+        return user.id; 
+    }
 }
