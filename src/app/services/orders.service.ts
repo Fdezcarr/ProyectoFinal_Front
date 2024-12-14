@@ -16,8 +16,11 @@ export class PedidosService {
         return this.http.get<Pedido[]>(this.apiUrl);
     }
 
-    getAllMyPedidos(usuario_id : number): Observable<Pedido[]> {
+    getAllMyPedidos(usuario_id: number): Observable<Pedido[]> {
         return this.http.get<Pedido[]>(`${this.apiUrl}/usuario/${usuario_id}`)
+    }
+    getAllMyPedidosPendientes(usuario_id: number): Observable<Pedido[]> {
+        return this.http.get<Pedido[]>(`${this.apiUrl}/usuario/${usuario_id}/pendiente`)
     }
 
     getById(id: number): Promise<Pedido> {

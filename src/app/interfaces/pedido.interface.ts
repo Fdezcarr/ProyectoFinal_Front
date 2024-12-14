@@ -1,18 +1,20 @@
 export interface Pedido {
     id?: number;
-    origen: string;
-    destino: string;
+    origen: number;
+    destino: number;
+    origen_nombre: string;
+    destino_nombre: string;
     fecha_salida?: string;
     estado: Status;
     matricula_camion: string;
+    encargado: number,
+    encargado_nombre: string,
+    operario: number,
+    operario_nombre: string,
 }
 
 export enum Status {
-    'Pendiente de pago' = 'pendiente_de_pago',
-    'Aceptado' = 'aceptado',
-    'Cancelado' = 'cancelado',
+    'Pendiente' = 'pendiente',
     'En revisión' = 'en_revision',
-    'Pendiente de envío' = 'pendiente_de_envio',
-    'Enviado' = 'enviado',
-    'Entregado' = 'entregado',
+    'Completado' = 'completado',
 }

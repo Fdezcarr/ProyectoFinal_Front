@@ -24,7 +24,6 @@ export class EncargadoComponent {
 
     ngOnInit() {
         const {id}: any = this.authService.getUser();
-        console.log(id);
         this.pedidoService.getAllMyPedidos(id).subscribe({
             next: (response) => {
                 this.pedidos = response.map((pedido) => ({
@@ -38,11 +37,17 @@ export class EncargadoComponent {
 
     constructor(private pedidoService: PedidosService) {
         this.pedido = {
-            origen: '',
-            destino: '',
+            origen: null,
+            destino: null,
+            origen_nombre: '',
+            destino_nombre: '',
             matricula_camion: '',
-            estado: Status['Pendiente de pago'],
             fecha_salida: '',
+            estado: Status['Pendiente'],
+            encargado: null,
+            encargado_nombre: '',
+            operario: null,
+            operario_nombre: '',
         };
     }
 

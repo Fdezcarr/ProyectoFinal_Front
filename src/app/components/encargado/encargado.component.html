@@ -1,5 +1,33 @@
 <div class="container mt-5">
     <div class="row">
+        <!-- Pedidos pendientes -->
+        <div class="col-md-12">
+            <h2 class="mb-3">Pedidos pendientes</h2>
+            <table class="table table-bordered">
+                <thead class="table-light">
+                    <tr>
+                        <th>Origen</th>
+                        <th>Destino</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                        <th>Matrícula</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let pedido of pedidos">
+                        <td>{{ pedido.origen_nombre }}</td>
+                        <td>{{ pedido.destino_nombre }}</td>
+                        <td>{{ pedido.fecha_salida }}</td>
+                        <td>
+                            <app-selector-estado
+                                [pedido]="pedido"
+                            ></app-selector-estado>
+                        </td>
+                        <td>{{ pedido.matricula_camion }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <!-- Mis pedidos -->
         <div class="col-md-12">
             <h2 class="mb-3">Mis pedidos</h2>
@@ -15,8 +43,8 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let pedido of pedidos">
-                        <td>{{ pedido.origen }}</td>
-                        <td>{{ pedido.destino }}</td>
+                        <td>{{ pedido.origen_nombre }}</td>
+                        <td>{{ pedido.destino_nombre }}</td>
                         <td>{{ pedido.fecha_salida }}</td>
                         <td>
                             <app-selector-estado
@@ -30,34 +58,4 @@
         </div>
     </div>
 
-    <!-- Pedidos activos -->
-    <div class="row mt-5">
-        <div class="col-12">
-            <h2 class="mb-3">Todos los pedidos</h2>
-            <table class="table table-bordered">
-                <thead class="table-light">
-                    <tr>
-                        <th>Origen</th>
-                        <th>Destino</th>
-                        <th>Fecha</th>
-                        <th>Estado</th>
-                        <th>Matrícula</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let pedido of pedidos">
-                        <td>{{ pedido.origen }}</td>
-                        <td>{{ pedido.destino }}</td>
-                        <td>{{ pedido.fecha_salida }}</td>
-                        <td>
-                            <app-selector-estado
-                                [pedido]="pedido"
-                            ></app-selector-estado>
-                        </td>
-                        <td>{{ pedido.matricula_camion }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
 </div>
