@@ -24,3 +24,23 @@ li a {
 .logo {
     transform: rotate(-90deg) scale(5);
 }
+
+@media (max-width: 1200px){
+    nav{
+        width: 100vw;
+        height: 10vh;
+    }
+
+    .logo{
+        width: 50%;
+        transform: none;
+    }
+
+    nav ul {
+        flex-direction: row !important;
+    }
+
+    .avatar{
+        display: none;
+    }
+}

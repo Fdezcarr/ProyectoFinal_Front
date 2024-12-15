@@ -1,9 +1,7 @@
-<div class="container my-4">
-    <h1 class="text-center mb-4">Gestión de Pedidos</h1>
-
+<div class="container mt-5">
     <!-- Formulario para crear un nuevo pedido -->
     <div class="row mb-4">
-        <div class="col">
+        <div class="col-12 col-lg-3">
             <h3>Crear Nuevo Pedido</h3>
             <form (ngSubmit)="crearPedido()">
                 <div class="mb-3">
@@ -74,50 +72,41 @@
                         <option value="completado">Completado</option>
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-dark badge fs-5 py-2 px-3">
                     Añadir Pedido
                 </button>
             </form>
         </div>
-    </div>
+        <!-- Tabla de pedidos -->
 
-    <!-- Tabla de pedidos -->
-    <table class="table table-striped table-hover">
-        <thead class="table-dark">
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Matricula</th>
-                <th scope="col">Origen</th>
-                <th scope="col">Destino</th>
-                <th scope="col">Estado</th>
-                <th scope="col">Fecha</th>
-                <!-- <th scope="col">Acciones</th> -->
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let pedido of pedidos">
-                <td>{{ pedido.id }}</td>
-                <td>{{ pedido.matricula_camion }}</td>
-                <td>{{ pedido.origen }}</td>
-                <td>{{ pedido.destino }}</td>
-                <td>
-                    <app-selector-estado
-                        [pedido]="pedido"
-                    ></app-selector-estado>
-                </td>
-                <td>{{ pedido.fecha_salida | date: 'short' }}</td>
-                <!-- <td>
-                    <button class="btn btn-sm btn-info me-2" (click)="actualizarEstado(pedido, 'En proceso')">
-                        En proceso
-                    </button>
-                    <button class="btn btn-sm btn-success me-2" (click)="actualizarEstado(pedido, 'Completado')">
-                        Completado
-                    </button>
-                    <button class="btn btn-sm btn-danger" (click)="eliminarPedido(pedido.id)">
-                        Eliminar
-                    </button>
-                </td> -->
-            </tr>
-        </tbody>
-    </table>
+        <div class="table-responsive-lg col">
+            <table class="table table-bordered table-hover align-middle">
+                <thead class="table">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Matricula</th>
+                        <th scope="col">Origen</th>
+                        <th scope="col">Destino</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Fecha</th>
+                        <!-- <th scope="col">Acciones</th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let pedido of pedidos">
+                        <td>{{ pedido.id }}</td>
+                        <td>{{ pedido.matricula_camion }}</td>
+                        <td>{{ pedido.origen }}</td>
+                        <td>{{ pedido.destino }}</td>
+                        <td>
+                            <app-selector-estado
+                                [pedido]="pedido"
+                            ></app-selector-estado>
+                        </td>
+                        <td>{{ pedido.fecha_salida | date: 'short' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>

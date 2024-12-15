@@ -2,38 +2,55 @@
     <div class="row">
         <!-- Últimos pedidos -->
         <div class="col-md-12">
-            <h2 class="mb-3">Últimos pedidos</h2>
-            <table class="table table-bordered">
-                <thead class="table-light">
-                    <tr>
-                        <th>Origen</th>
-                        <th>Destino</th>
-                        <th>Fecha</th>
-                        <th>Estado</th>
-                        <th>Matrícula</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let pedido of pedidos">
-                        <td>{{ pedido.origen }}</td>
-                        <td>{{ pedido.destino }}</td>
-                        <td>{{ pedido.fecha_salida }}</td>
-                        <td>
-                            <app-selector-estado
-                                [pedido]="pedido"
-                            ></app-selector-estado>
-                        </td>
-                        <td>{{ pedido.matricula_camion }}</td>
-                    </tr>
-                </tbody>
-            </table>
+             <h2 class="mb-3">
+                Pedidos
+                <span class="badge rounded-pill text-muted bg-warning-subtle"
+                    >pendientes</span
+                >
+            </h2>
+        
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Origen</th>
+                            <th>Destino</th>
+                            <th>Fecha</th>
+                            <th>Estado</th>
+                            <th>Matrícula</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let pedido of pedidos">
+                            @if(pedido.estado==='pendiente'){
+                                <td>{{ pedido.origen }}</td>
+                                <td>{{ pedido.destino }}</td>
+                                <td>{{ pedido.fecha_salida }}</td>
+                                <td>
+                                    <app-selector-estado
+                                    [pedido]="pedido"
+                                    ></app-selector-estado>
+                                </td>
+                                <td>{{ pedido.matricula_camion }}
+                                    
+                                </td>
+                            }
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
     <!-- Pedidos activos -->
     <div class="row mt-5">
         <div class="col-12">
-            <h2 class="mb-3">Todos los pedidos</h2>
+             <h2 class="mb-3">
+                Todos
+                <span class="badge rounded-pill text-muted bg-success-subtle"
+                    >los pedidos</span
+                >
+            </h2>
             <table class="table table-bordered">
                 <thead class="table-light">
                     <tr>

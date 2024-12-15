@@ -1,0 +1,10 @@
+main {
+    padding: 5rem 5rem 5rem 9rem;
+}
+
+@media (max-width: 1200px){
+   main{
+       padding: 2rem;
+}
+
+}

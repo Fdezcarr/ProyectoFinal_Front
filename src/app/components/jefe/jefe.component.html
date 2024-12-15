@@ -1,13 +1,13 @@
-<div class="container">
+<div class="container col-12 col-lg-3 mb-5">
     <h2>Gestión de Usuarios</h2>
 
     <!-- Formulario añadir usuario -->
     <form
         *ngIf="!usuarioSeleccionado"
         (ngSubmit)="crearUsuario()"
-        class="row g-3 mt-3"
+        class=""
     >
-        <div class="col-md-3 col-sm-6">
+        <div class="col-mb-3">
             <input
                 [(ngModel)]="nuevoUsuario.nombre"
                 name="nombre"
@@ -16,7 +16,7 @@
                 required
             />
         </div>
-        <div class="col-md-3 col-sm-6">
+        <div class="col-md-3">
             <input
                 [(ngModel)]="nuevoUsuario.apellido"
                 name="apellido"
@@ -25,7 +25,7 @@
                 required
             />
         </div>
-        <div class="col-md-3 col-sm-6">
+        <div class="col-md-3">
             <input
                 [(ngModel)]="nuevoUsuario.email"
                 name="email"
@@ -37,7 +37,7 @@
                 El email ya está registrado
             </div>
         </div>
-        <div class="col-md-3 col-sm-6">
+        <div class="col-md-3">
             <input
                 [(ngModel)]="nuevoUsuario.password"
                 name="password"
@@ -46,7 +46,7 @@
                 required
             />
         </div>
-        <div class="col-md-3 col-sm-6">
+        <div class="col-md-3">
             <select
                 [(ngModel)]="nuevoUsuario.rol"
                 name="rol"
@@ -59,7 +59,7 @@
                 <option value="operario">Operario</option>
             </select>
         </div>
-        <div class="col-md-3 col-sm-6">
+        <div class="col-md-3">
             <select
                 [(ngModel)]="nuevoUsuario.almacen_id"
                 name="almacenId"
@@ -75,7 +75,7 @@
             </select>
         </div>
         <div class="col-12 text-center">
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-dark badge fs-5 py-2 px-3">
                 Agregar Usuario
             </button>
         </div>
@@ -87,7 +87,7 @@
         (ngSubmit)="editarUsuario()"
         class="row g-3 mt-3"
     >
-        <div class="col-md-3 col-sm-6">
+        <div class="col-md-3">
             <input
                 [(ngModel)]="usuarioSeleccionado.nombre"
                 name="nombre"
@@ -96,7 +96,7 @@
                 required
             />
         </div>
-        <div class="col-md-3 col-sm-6">
+        <div class="col-md-3">
             <input
                 [(ngModel)]="usuarioSeleccionado.apellido"
                 name="apellido"
@@ -105,7 +105,7 @@
                 required
             />
         </div>
-        <div class="col-md-3 col-sm-6">
+        <div class="col-md-3">
             <input
                 [(ngModel)]="usuarioSeleccionado.email"
                 name="email"
@@ -117,7 +117,7 @@
                 El email ya está registrado
             </div>
         </div>
-        <div class="col-md-3 col-sm-6">
+        <div class="col-md-3">
             <select
                 [(ngModel)]="usuarioSeleccionado.rol"
                 name="rol"
@@ -129,7 +129,7 @@
                 <option value="operario">Operario</option>
             </select>
         </div>
-        <div class="col-md-3 col-sm-6">
+        <div class="col-md-3">
             <select
                 [(ngModel)]="usuarioSeleccionado.almacen_id"
                 name="almacenId"
