@@ -10,6 +10,8 @@ interface payload extends JwtPayload {
     usuario_rol: string;
     usuario_nombre: string;
     usuario_email: string;
+    usuario_almacen: number;
+    usuario_telefono: number;
 }
 
 @Injectable({
@@ -48,6 +50,8 @@ export class AuthService {
                 rol: data.usuario_rol,
                 nombre: data.usuario_nombre,
                 email: data.usuario_email,
+                almacen: data.usuario_almacen,
+                telefono: data.usuario_telefono,
             };
             return this.usuario;
         } catch (err) {

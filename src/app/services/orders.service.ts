@@ -17,10 +17,17 @@ export class PedidosService {
     }
 
     getAllMyPedidos(usuario_id: number): Observable<Pedido[]> {
-        return this.http.get<Pedido[]>(`${this.apiUrl}/usuario/${usuario_id}`)
+        return this.http.get<Pedido[]>(`${this.apiUrl}/usuario/${usuario_id}`);
     }
     getAllMyPedidosPendientes(usuario_id: number): Observable<Pedido[]> {
-        return this.http.get<Pedido[]>(`${this.apiUrl}/usuario/${usuario_id}/pendiente`)
+        return this.http.get<Pedido[]>(
+            `${this.apiUrl}/usuario/${usuario_id}/pendiente`
+        );
+    }
+    
+    getAllPedidosFromAlmacen(almacen_id: number) : Observable<Pedido[]>{
+        return this.http.get<Pedido[]>(`${this.apiUrl}/almacen/${almacen_id}`);
+
     }
 
     getById(id: number): Promise<Pedido> {

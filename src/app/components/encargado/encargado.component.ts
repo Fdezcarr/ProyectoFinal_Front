@@ -1,11 +1,11 @@
 import { Component, ElementRef, inject, ViewChild } from '@angular/core';
-import { Status } from '../../interfaces/pedido.interface';
 import { CommonModule } from '@angular/common';
 import { Pedido } from '../../interfaces/pedido.interface';
 import { PedidosService } from '../../services/orders.service';
 import { FormsModule } from '@angular/forms';
 import { SelectorEstadoComponent } from '../selector-estado/selector-estado.component';
 import { AuthService } from '../../services/auth.service';
+import { Almacen } from '../../interfaces/almacen.interface';
 
 @Component({
     selector: 'app-encargado',
@@ -15,56 +15,26 @@ import { AuthService } from '../../services/auth.service';
     styleUrl: './encargado.component.css',
 })
 export class EncargadoComponent {
+    authService = inject(AuthService);
+    pedidoService = inject(PedidosService);
+
     @ViewChild('modalDetails') modalElement!: ElementRef;
     pedidos: Pedido[] = [];
     pedido: Pedido;
     pedidosRecientes: Pedido[] = [];
-
-    authService = inject(AuthService);
+    almacen: number | null = null;
 
     ngOnInit() {
-        const {id}: any = this.authService.getUser();
+        const { id, almacen }: any = this.authService.getUser();
+        this.almacen = almacen;
+        console.log(this.almacen, almacen)
+
+        
         this.pedidoService.getAllMyPedidos(id).subscribe({
             next: (response) => {
-                this.pedidos = response.map((pedido) => ({
-                    ...pedido,
-                    fecha_salida: this.formatFecha(pedido.fecha_salida),
-                }));
-                this.filterPedidosRecientes();
+                this.pedidos = response;
             },
         });
-    }
-
-    constructor(private pedidoService: PedidosService) {
-        this.pedido = {
-            origen: null,
-            destino: null,
-            origen_nombre: '',
-            destino_nombre: '',
-            matricula_camion: '',
-            fecha_salida: '',
-            estado: Status['Pendiente'],
-            encargado: null,
-            encargado_nombre: '',
-            operario: null,
-            operario_nombre: '',
-        };
-    }
-
-    // Formateamos la fecha al formato español 'dd/mm/yyyy'
-    formatFecha(fecha: string): string {
-        const date = new Date(fecha);
-        if (isNaN(date.getTime())) {
-            return '';
-        }
-
-        const options: Intl.DateTimeFormatOptions = {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-        };
-
-        return date.toLocaleDateString('es-ES', options); // Formato: dd/mm/yyyy
     }
 
     filterPedidosRecientes(): void {

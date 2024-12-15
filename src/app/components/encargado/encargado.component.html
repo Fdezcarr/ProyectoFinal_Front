@@ -1,61 +1,216 @@
-<div class="container mt-5">
+<div class="container">
     <div class="row">
         <!-- Pedidos pendientes -->
-        <div class="col-md-12">
-            <h2 class="mb-3">Pedidos pendientes</h2>
-            <table class="table table-bordered">
-                <thead class="table-light">
+        <div class="col-12 my-5 pb-3 border-bottom">
+            <h2 class="mb-3">
+                Pedidos
+                <span class="badge rounded-pill text-muted bg-warning-subtle"
+                    >pendientes</span
+                >
+            </h2>
+            <table class="table table-bordered table-hover align-middle">
+                <thead>
                     <tr>
                         <th>Origen</th>
                         <th>Destino</th>
-                        <th>Fecha</th>
-                        <th>Estado</th>
+                        <th>Creado</th>
+                        <th>Actualizado</th>
+                        <th>Operario</th>
                         <th>Matrícula</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let pedido of pedidos">
-                        <td>{{ pedido.origen_nombre }}</td>
-                        <td>{{ pedido.destino_nombre }}</td>
-                        <td>{{ pedido.fecha_salida }}</td>
-                        <td>
-                            <app-selector-estado
-                                [pedido]="pedido"
-                            ></app-selector-estado>
-                        </td>
-                        <td>{{ pedido.matricula_camion }}</td>
-                    </tr>
+                    @for (pedido of pedidos; track $index) {
+                        @if (pedido.estado === 'pendiente') {
+                            <tr>
+                                <td>{{ pedido.origen_nombre }}</td>
+                                <td>{{ pedido.destino_nombre }}</td>
+                                <td>
+                                    {{ pedido.fecha_creacion | date: 'short' }}
+                                </td>
+                                <td>
+                                    @if (pedido.fecha_modificacion && pedido.fecha_modificacion !== '') {
+                                        {{  pedido.fecha_modificacion   | date: 'short'}}
+                                    } @else {
+                                        -
+                                    }
+                                </td>
+                                <td>{{ pedido.operario_nombre }}</td>
+                                <td>{{ pedido.matricula_camion }}</td>
+                                <td>
+                                    <app-selector-estado
+                                        [pedido]="pedido"
+                                    ></app-selector-estado>
+                                </td>
+                                <td>
+                                    <button
+                                        type="button"
+                                        class="btn btn-outline-primary"
+                                    >
+                                        <i
+                                            class="fa-solid fa-magnifying-glass"
+                                        ></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    }
                 </tbody>
             </table>
         </div>
-        <!-- Mis pedidos -->
-        <div class="col-md-12">
-            <h2 class="mb-3">Mis pedidos</h2>
-            <table class="table table-bordered">
-                <thead class="table-light">
+
+
+ <!-- Pedidos pendientes -->
+        <div class="col-12 my-5 pb-3 border-bottom">
+            <h2 class="mb-3">
+                Pedidos
+                <span class="badge rounded-pill text-muted bg-warning-subtle"
+                    >DEBUG</span
+                >
+            </h2>
+            <table class="table table-bordered table-hover align-middle">
+                <thead>
                     <tr>
                         <th>Origen</th>
                         <th>Destino</th>
-                        <th>Fecha</th>
-                        <th>Estado</th>
+                        <th>Creado</th>
+                        <th>Actualizado</th>
+                        <th>Operario</th>
                         <th>Matrícula</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let pedido of pedidos">
-                        <td>{{ pedido.origen_nombre }}</td>
-                        <td>{{ pedido.destino_nombre }}</td>
-                        <td>{{ pedido.fecha_salida }}</td>
-                        <td>
-                            <app-selector-estado
-                                [pedido]="pedido"
-                            ></app-selector-estado>
-                        </td>
-                        <td>{{ pedido.matricula_camion }}</td>
+                    @for (pedido of pedidos; track $index) {
+                       
+                            <tr>
+                                <td>{{ pedido.origen_nombre }}</td>
+                                <td>{{ pedido.destino_nombre }}</td>
+                                <td>
+                                    {{ pedido.fecha_creacion | date: 'short' }}
+                                </td>
+                                <td>
+                                    @if (pedido.fecha_modificacion && pedido.fecha_modificacion !== '') {
+                                        {{  pedido.fecha_modificacion   | date: 'short'}}
+                                    } @else {
+                                        -
+                                    }
+                                </td>
+                                <td>{{ pedido.operario_nombre }}</td>
+                                <td>{{ pedido.matricula_camion }}</td>
+                                <td>
+                                    <app-selector-estado
+                                        [pedido]="pedido"
+                                    ></app-selector-estado>
+                                </td>
+                                <td>
+                                    <button
+                                        type="button"
+                                        class="btn btn-outline-primary"
+                                    >
+                                        <i
+                                            class="fa-solid fa-magnifying-glass"
+                                        ></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        
+                    }
+                </tbody>
+            </table>
+        </div>
+
+
+
+        <!-- Salidas -->
+        <div class="col-6 my-5 pb-3 border-bottom">
+            <h2 class="mb-3">Salidas</h2>
+            <table class="table table-bordered table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>Destino</th>
+                        <th>Creado</th>
+
+                        <th>Estado</th>
+                        <th>Acciones</th>
                     </tr>
+                </thead>
+                <tbody>
+                    @for (pedido of pedidos; track $index) {
+                        @if (pedido.origen === almacen) {
+                            <tr>
+                                <td>{{ pedido.destino_nombre }}</td>
+                                <td>
+                                    {{ pedido.fecha_creacion | date: 'short' }}
+                                </td>
+
+                                <td>
+                                    <app-selector-estado
+                                        [pedido]="pedido"
+                                    ></app-selector-estado>
+                                </td>
+                                <td>
+                                    <button
+                                        type="button"
+                                        class="btn btn-outline-primary"
+                                    >
+                                        <i
+                                            class="fa-solid fa-magnifying-glass"
+                                        ></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- Entradas -->
+        <div class="col-6 my-5 pb-3 border-bottom">
+            <h2 class="mb-3">Entradas</h2>
+            <table class="table table-bordered table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>Origen</th>
+                        <th>Creado</th>
+
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (pedido of pedidos; track $index) {
+                        @if (pedido.destino === almacen) {
+                            <tr>
+                                <td>{{ pedido.origen_nombre }}</td>
+                                <td>{{ pedido.destino_nombre }}</td>
+                                <td>
+                                    {{ pedido.fecha_creacion | date: 'short' }}
+                                </td>
+
+                                <td>
+                                    <app-selector-estado
+                                        [pedido]="pedido"
+                                    ></app-selector-estado>
+                                </td>
+                                <td>
+                                    <button
+                                        type="button"
+                                        class="btn btn-outline-primary"
+                                    >
+                                        <i
+                                            class="fa-solid fa-magnifying-glass"
+                                        ></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    }
                 </tbody>
             </table>
         </div>
     </div>
-
 </div>
