@@ -3,63 +3,81 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AlmacenService } from '../../services/almacen.service';
 import { SelectorAlmacenComponent } from '../selector-almacen/selector-almacen.component';
+import { PedidosService } from '../../services/orders.service';
+import { Pedido, Status } from '../../interfaces/pedido.interface';
+import { SelectorEstadoComponent } from '../selector-estado/selector-estado.component';
+import { Almacen } from '../../interfaces/almacen.interface';
 
 @Component({
     selector: 'app-operario',
     standalone: true,
-    imports: [CommonModule, FormsModule, SelectorAlmacenComponent], // Importamos los módulos necesarios
+    imports: [CommonModule, FormsModule, SelectorEstadoComponent],
     templateUrl: './operario.component.html',
     styleUrls: ['./operario.component.css'],
 })
 export class OperarioComponent {
-    tareas: any[] = [];
-    filterText: string = '';
-    nuevoPedido: any = {
-        nombre: '',
+    pedidos: Pedido[] = [];
+    almacenes: Almacen[];
+    nuevoPedido: Pedido = {
+        matricula_camion: '',
         origen: '',
         destino: '',
-        fecha: '',
-        estado: 'Pendiente',
-        contacto: '',
+        fecha_salida: '',
+        estado: Status.pendiente,
     };
-    almacenes: any[] = [];
 
-    nuevoAlmacen: any = { nombre: '', localizacion: '' };
-
-    almacenService = inject(AlmacenService);
-
-    constructor() {}
+    constructor(
+        private pedidoService: PedidosService,
+        private almacenServices: AlmacenService
+    ) {}
 
     ngOnInit(): void {
-        // Inicializar datos de prueba
-        this.cargarAlmacenes();
-    }
-
-    cargarAlmacenes(): void {
-        this.almacenService.getAlmacenes().subscribe(
-            (data) => (this.almacenes = data),
-            (error) => console.error('Error al cargar almacenes:', error)
-        );
+        this.pedidoService.getAllPedidos().then((response) => {
+            this.pedidos = response.filter(
+                (pedido) => pedido.estado === Status.pendiente
+            );
+        });
+        this.almacenServices.getAlmacenes().then((response) => {
+            this.almacenes = response;
+            this.nuevoPedido.origen = this.almacenes[0].nombre;
+            this.nuevoPedido.destino = this.almacenes[1].nombre;
+        });
     }
 
     crearPedido(): void {
-        const nuevoPedidoConId = {
-            id: this.tareas.length + 1,
-            ...this.nuevoPedido, // Copia todos los valores del formulario
-        };
-
-        this.tareas.push(nuevoPedidoConId);
-        console.log('Pedido añadido:', nuevoPedidoConId);
-
-        // Reiniciar el formulario
-        this.nuevoPedido = {
-            nombre: '',
-            origen: '',
-            destino: '',
-            fecha: '',
-            estado: 'Pendiente',
-            contacto: '',
-        };
+        try {
+            this.pedidoService
+                .insertPedido(this.nuevoPedido)
+                .then((response) => {
+                    if (response) {
+                        alert(
+                            'Pedido con ID ' +
+                                response.id +
+                                ' se ha creado correctamente'
+                        );
+                        this.pedidoService
+                            .getAllPedidos()
+                            .then((response) => {
+                                this.pedidos = response.filter(
+                                    (pedido) =>
+                                        pedido.estado === Status.pendiente
+                                );
+                            })
+                            .finally(() => {
+                                // Reiniciar el formulario
+                                this.nuevoPedido = {
+                                    matricula_camion: '',
+                                    origen: '',
+                                    destino: '',
+                                    fecha_salida: '',
+                                    estado: Status.pendiente,
+                                };
+                            });
+                    }
+                });
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     actualizarEstado(tarea: any, nuevoEstado: string): void {
@@ -67,8 +85,8 @@ export class OperarioComponent {
         console.log(`Tarea ${tarea.id} actualizada a: ${nuevoEstado}`);
     }
 
-    eliminarTarea(id: number): void {
-        console.log(`Eliminar tarea con ID: ${id}`);
-        this.tareas = this.tareas.filter((tarea) => tarea.id !== id);
-    }
+    // eliminarPedido(id: number): void {
+    //     console.log(`Eliminar tarea con ID: ${id}`);
+    //     this.pedidos = this.pedidos.filter((tarea) => tarea.id !== id);
+    // }
 }

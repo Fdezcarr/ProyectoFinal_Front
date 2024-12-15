@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 import { Usuario } from '../interfaces/usuario';
 
 @Injectable({
@@ -20,12 +20,16 @@ export class UsuarioService {
 
     // Crear un nuevo usuario
     crearUsuario(usuario: any): Observable<any> {
+        console.log(usuario);
+
         return this.http.post<any>(this.baseUrl, usuario);
     }
 
     // Editar un usuario existente
-    editarUsuario(usuario: any): Observable<any> {
-        return this.http.put<any>(`${this.baseUrl}/${usuario.id}`, usuario);
+    editarUsuario(usuario: any): Promise<any> {
+        return firstValueFrom(
+            this.http.put<any>(`${this.baseUrl}/${usuario.id}`, usuario)
+        );
     }
 
     // Eliminar un usuario
@@ -36,5 +40,5 @@ export class UsuarioService {
     //Verificar duplicidad del Email
     checkEmail(email: string): Observable<any> {
         return this.http.get<any>(`${this.baseUrl}/checkEmail?email=${email}`);
-      }
+    }
 }

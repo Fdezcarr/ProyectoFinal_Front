@@ -27,14 +27,12 @@ export class EncargadoComponent {
             estado: Status['Pendiente de pago'],
             fecha_salida: '',
         };
-        this.pedidoService.getAllPedidos().subscribe({
-            next: (response) => {
-                this.pedidos = response.map((pedido) => ({
-                    ...pedido,
-                    fecha_salida: this.formatFecha(pedido.fecha_salida),
-                }));
-                this.filterPedidosRecientes();
-            },
+        this.pedidoService.getAllPedidos().then((response) => {
+            this.pedidos = response.map((pedido) => ({
+                ...pedido,
+                fecha_salida: this.formatFecha(pedido.fecha_salida),
+            }));
+            this.filterPedidosRecientes();
         });
     }
 

@@ -7,27 +7,47 @@
             <h3>Crear Nuevo Pedido</h3>
             <form (ngSubmit)="crearPedido()">
                 <div class="mb-3">
-                    <label for="nombre" class="form-label">Nombre</label>
+                    <label for="matricula" class="form-label"
+                        >Matrícula del camión</label
+                    >
                     <input
                         type="text"
                         class="form-control"
-                        id="nombre"
-                        [(ngModel)]="nuevoPedido.nombre"
-                        name="nombre"
+                        id="matricula"
+                        [(ngModel)]="nuevoPedido.matricula_camion"
+                        name="matricula"
                         required
                     />
                 </div>
                 <div class="mb-3">
                     <label for="origen" class="form-label">Origen</label>
-                    <app-selector-almacen
-                        [id]="'origen'"
-                    ></app-selector-almacen>
+                    <select
+                        class="form-select"
+                        [(ngModel)]="nuevoPedido.origen"
+                        [ngModelOptions]="{ standalone: true }"
+                    >
+                        <option
+                            *ngFor="let almacen of almacenes"
+                            [value]="almacen.nombre"
+                        >
+                            {{ almacen.nombre }}
+                        </option>
+                    </select>
                 </div>
                 <div class="mb-3">
                     <label for="destino" class="form-label">Destino</label>
-                    <app-selector-almacen
-                        [id]="'destino'"
-                    ></app-selector-almacen>
+                    <select
+                        class="form-select"
+                        [(ngModel)]="nuevoPedido.destino"
+                        [ngModelOptions]="{ standalone: true }"
+                    >
+                        <option
+                            *ngFor="let almacen of almacenes"
+                            [value]="almacen.nombre"
+                        >
+                            {{ almacen.nombre }}
+                        </option>
+                    </select>
                 </div>
                 <div class="mb-3">
                     <label for="fecha" class="form-label">Fecha</label>
@@ -35,7 +55,7 @@
                         type="date"
                         class="form-control"
                         id="fecha"
-                        [(ngModel)]="nuevoPedido.fecha"
+                        [(ngModel)]="nuevoPedido.fecha_salida"
                         name="fecha"
                         required
                     />
@@ -49,22 +69,12 @@
                         name="estado"
                         required
                     >
-                        <option value="Pendiente">Pendiente</option>
-                        <option value="En proceso">En proceso</option>
-                        <option value="Completado">Completado</option>
+                        <option value="pendiente">Pendiente</option>
+                        <option value="revisando">En proceso</option>
+                        <option value="completado">Completado</option>
                     </select>
                 </div>
-                <div class="mb-3">
-                    <label for="contacto" class="form-label">Contacto</label>
-                    <input
-                        type="text"
-                        class="form-control"
-                        id="contacto"
-                        [(ngModel)]="nuevoPedido.contacto"
-                        name="contacto"
-                    />
-                </div>
-                <button type="submit" class="btn btn-success">
+                <button type="submit" class="btn btn-primary">
                     Añadir Pedido
                 </button>
             </form>
@@ -76,56 +86,37 @@
         <thead class="table-dark">
             <tr>
                 <th scope="col">ID</th>
-                <th scope="col">Nombre</th>
+                <th scope="col">Matricula</th>
                 <th scope="col">Origen</th>
                 <th scope="col">Destino</th>
                 <th scope="col">Estado</th>
                 <th scope="col">Fecha</th>
-                <th scope="col">Contacto</th>
-                <th scope="col">Acciones</th>
+                <!-- <th scope="col">Acciones</th> -->
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let tarea of tareas">
-                <td>{{ tarea.id }}</td>
-                <td>{{ tarea.nombre }}</td>
-                <td>{{ tarea.origen }}</td>
-                <td>{{ tarea.destino }}</td>
+            <tr *ngFor="let pedido of pedidos">
+                <td>{{ pedido.id }}</td>
+                <td>{{ pedido.matricula_camion }}</td>
+                <td>{{ pedido.origen }}</td>
+                <td>{{ pedido.destino }}</td>
                 <td>
-                    <span
-                        class="badge"
-                        [ngClass]="{
-                            'bg-warning text-dark':
-                                tarea.estado === 'Pendiente',
-                            'bg-primary': tarea.estado === 'En proceso',
-                            'bg-success': tarea.estado === 'Completado',
-                        }"
-                    >
-                        {{ tarea.estado }}
-                    </span>
+                    <app-selector-estado
+                        [pedido]="pedido"
+                    ></app-selector-estado>
                 </td>
-                <td>{{ tarea.fecha | date: 'short' }}</td>
-                <td>{{ tarea.contacto }}</td>
-                <td>
-                    <button
-                        class="btn btn-sm btn-info me-2"
-                        (click)="actualizarEstado(tarea, 'En proceso')"
-                    >
+                <td>{{ pedido.fecha_salida | date: 'short' }}</td>
+                <!-- <td>
+                    <button class="btn btn-sm btn-info me-2" (click)="actualizarEstado(pedido, 'En proceso')">
                         En proceso
                     </button>
-                    <button
-                        class="btn btn-sm btn-success me-2"
-                        (click)="actualizarEstado(tarea, 'Completado')"
-                    >
+                    <button class="btn btn-sm btn-success me-2" (click)="actualizarEstado(pedido, 'Completado')">
                         Completado
                     </button>
-                    <button
-                        class="btn btn-sm btn-danger"
-                        (click)="eliminarTarea(tarea.id)"
-                    >
+                    <button class="btn btn-sm btn-danger" (click)="eliminarPedido(pedido.id)">
                         Eliminar
                     </button>
-                </td>
+                </td> -->
             </tr>
         </tbody>
     </table>

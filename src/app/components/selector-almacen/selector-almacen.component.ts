@@ -15,14 +15,12 @@ export class SelectorAlmacenComponent {
     almacenes: Almacen[] = [];
 
     ngOnInit() {
-        this.almacenService.getAlmacenes().subscribe({
-            next: (data) => {
-                this.almacenes = data;
-                console.log('Almacenes:', this.almacenes);
-            },
-            error: (err) => {
-                console.error('Error al cargar los almacenes:', err);
-            },
+        this.almacenService.getAlmacenes().then((response) => {
+            this.almacenes = response;
         });
+        try {
+        } catch (error) {
+            console.error('Error al cargar los almacenes:', error);
+        }
     }
 }

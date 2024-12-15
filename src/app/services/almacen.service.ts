@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 import { Almacen } from '../interfaces/almacen.interface';
 
 @Injectable({
@@ -12,8 +12,8 @@ export class AlmacenService {
     constructor(private http: HttpClient) {}
 
     // Obtener todos los almacenes
-    getAlmacenes(): Observable<Almacen[]> {
-        return this.http.get<Almacen[]>(this.baseUrl);
+    getAlmacenes(): Promise<Almacen[]> {
+        return firstValueFrom(this.http.get<Almacen[]>(this.baseUrl));
     }
 
     // Crear un nuevo almacén
@@ -22,8 +22,10 @@ export class AlmacenService {
     }
 
     // Editar un almacén existente
-    editarAlmacen(almacen: Almacen): Observable<Almacen> {
-        return this.http.put<Almacen>(`${this.baseUrl}/${almacen.id}`, almacen);
+    editarAlmacen(almacen: Almacen): Promise<Almacen> {
+        return firstValueFrom(
+            this.http.put<Almacen>(`${this.baseUrl}/${almacen.id}`, almacen)
+        );
     }
 
     // Eliminar un almacén

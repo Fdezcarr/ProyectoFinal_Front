@@ -12,10 +12,12 @@ export class PedidosService {
     constructor(private http: HttpClient) {}
 
     // Método para obtener todos los pedidos
-    getAllPedidos(): Observable<Pedido[]> {
+    getAllPedidos(): Promise<Pedido[]> {
         const token = localStorage.getItem('token');
         const headers = { Authorization: `Bearer ${token}` };
-        return this.http.get<Pedido[]>(this.apiUrl, { headers });
+        return firstValueFrom(
+            this.http.get<Pedido[]>(this.apiUrl, { headers })
+        );
     }
 
     getById(id: number): Promise<Pedido> {
