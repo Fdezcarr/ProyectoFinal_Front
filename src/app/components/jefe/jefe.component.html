@@ -2,12 +2,16 @@
     <div class="row usuarios">
         <h2 class="col-12">Gestión de empleados</h2>
     <!-- Formulario añadir usuario -->
+     <div class="col-12 col-lg-3 mb-5">
+
+
+    
     <form
         *ngIf="!usuarioSeleccionado"
         (ngSubmit)="crearUsuario()"
-        class="col-md-3"
+        
     >
-        <div class="">
+        <div class="mb-3">
             <input
                 [(ngModel)]="nuevoUsuario.nombre"
                 name="nombre"
@@ -16,7 +20,7 @@
                 required
             />
         </div>
-        <div class="">
+        <div class="mb-3">
             <input
                 [(ngModel)]="nuevoUsuario.apellido"
                 name="apellido"
@@ -25,7 +29,7 @@
                 required
             />
         </div>
-        <div class="">
+        <div class="mb-3">
             <input
                 [(ngModel)]="nuevoUsuario.email"
                 name="email"
@@ -38,7 +42,7 @@
             </div>
         </div>
        
-        <div class="">
+        <div class="mb-3">
             <input
                 [(ngModel)]="nuevoUsuario.password"
                 name="password"
@@ -47,7 +51,7 @@
                 required
             />
         </div>
-         <div class="">
+         <div class="mb-3">
             <input
                 [(ngModel)]="nuevoUsuario.telefono"
                 name="telefono"
@@ -55,7 +59,7 @@
                 placeholder="Teléfono"
             />
         </div>
-        <div class="">
+        <div class="mb-3">
             <select
                 [(ngModel)]="nuevoUsuario.rol"
                 name="rol"
@@ -69,7 +73,7 @@
                 <option value="encargado">Encargado</option>
             </select>
         </div>
-        <div class="">
+        <div class="mb-3">
             <select
                 [(ngModel)]="nuevoUsuario.almacen"
                 name="almacenId"
@@ -85,19 +89,20 @@
             </select>
         </div>
         <div class="col-12 text-center">
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-dark badge fs-5 py2 px-3">
                 Agregar Usuario
             </button>
         </div>
     </form>
+    
 
     <!-- Formulario editar usuario -->
     <form
         *ngIf="usuarioSeleccionado"
         (ngSubmit)="editarUsuario()"
-        class="row g-3 mt-3"
+        
     >
-        <div class="">
+        <div class="mb-3">
             <input
                 [(ngModel)]="usuarioSeleccionado.nombre"
                 name="nombre"
@@ -106,7 +111,7 @@
                 required
             />
         </div>
-        <div class="">
+        <div class="mb-3">
             <input
                 [(ngModel)]="usuarioSeleccionado.apellido"
                 name="apellido"
@@ -115,7 +120,7 @@
                 required
             />
         </div>
-        <div class="">
+        <div class="mb-3">
             <input
                 [(ngModel)]="usuarioSeleccionado.email"
                 name="email"
@@ -127,7 +132,7 @@
                 El email ya está registrado
             </div>
         </div>
-        <div class="">
+        <div class="mb-3">
             <select
                 [(ngModel)]="usuarioSeleccionado.rol"
                 name="rol"
@@ -139,7 +144,7 @@
                 <option value="operario">Operario</option>
             </select>
         </div>
-        <div class="">
+        <div class="mb-3">
             <select
                 [(ngModel)]="usuarioSeleccionado.almacen"
                 name="almacenId"
@@ -155,13 +160,16 @@
             </select>
         </div>
         <div class="col-12 text-center">
-            <button type="submit" class="btn btn-warning">
+            <button type="submit" class="btn btn-dark badge fs-5 py2 px-3">
                 Editar Usuario
             </button>
         </div>
     </form>
+ </div>
+    <div class="table-responsive-lg col">
 
-    <table class="table mt-4 col">
+  
+    <table class="table mt-4">
         <thead>
             <tr>
                 <th>Nombre</th>
@@ -196,16 +204,16 @@
             </tr>
         </tbody>
     </table>
-
+  </div>
     <h2>Gestión de Almacenes</h2>
 
     <!-- Formulario añadir almacén -->
     <form
         *ngIf="!almacenSeleccionado"
         (ngSubmit)="crearAlmacen()"
-        class="row g-3 mt-3"
+        class="col-12 col-lg-3 mb-3"
     >
-        <div class="col-md-6">
+        <div class="mb-3">
             <input
                 [(ngModel)]="nuevoAlmacen.nombre"
                 name="nombre"
@@ -214,7 +222,7 @@
                 required
             />
         </div>
-        <div class="col-md-6">
+        <div class="mb-3">
             <input
                 [(ngModel)]="nuevoAlmacen.localizacion"
                 name="localizacion"
@@ -224,7 +232,7 @@
             />
         </div>
         <div class="col-12 text-center">
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-dark badge fs-5 py2 px-3">
                 Agregar Almacén
             </button>
         </div>
@@ -234,9 +242,9 @@
     <form
         *ngIf="almacenSeleccionado"
         (ngSubmit)="editarAlmacen()"
-        class="row g-3 mt-3"
+        class="col-12 col-lg-3 mb-3"
     >
-        <div class="col-md-6">
+        <div class="mb-3">
             <input
                 [(ngModel)]="almacenSeleccionado.nombre"
                 name="nombre"
@@ -245,7 +253,7 @@
                 required
             />
         </div>
-        <div class="col-md-6">
+        <div class="mb-3">
             <input
                 [(ngModel)]="almacenSeleccionado.localizacion"
                 name="localizacion"
@@ -255,12 +263,15 @@
             />
         </div>
         <div class="col-12 text-center">
-            <button type="submit" class="btn btn-warning">
+            <button type="submit" class="btn btn-dark badge fs-5 py2 px-3">
                 Editar Almacén
             </button>
         </div>
     </form>
 
+    <div class="table-responsive-lg col">
+
+    
     <table class="table mt-4">
         <thead>
             <tr>
@@ -290,34 +301,6 @@
             </tr>
         </tbody>
     </table>
-    <!-- <div *ngIf="almacenSeleccionado" class="modal">
-        <div class="modal-content">
-            <h3>Editar Almacén</h3>
-            <input
-                [(ngModel)]="almacenSeleccionado.nombre"
-                class="form-control"
-                placeholder="Nombre"
-            />
-            <input
-                [(ngModel)]="almacenSeleccionado.localizacion"
-                class="form-control"
-                placeholder="Localización"
-            />
-            <div class="modal-actions">
-                <button
-                    class="btn btn-success"
-                    (click)="guardarAlmacenEditado()"
-                >
-                    Guardar
-                </button>
-                <button
-                    class="btn btn-secondary"
-                    (click)="almacenSeleccionado = null"
-                >
-                    Cancelar
-                </button>
-            </div>
-        </div>
-    </div> -->
+   </div>
 </div>
 </div>
