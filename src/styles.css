@@ -1,5 +1,10 @@
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css');
 
+html,
+body {
+    font-family: 'Poppins', serif !important;
+}
+
 body {
     overflow-y: auto !important;
     background-color: #f8f8f8 !important;
@@ -8,6 +13,10 @@ body {
 nav.bg-dark-subtle,
 footer.bg-dark-subtle {
     background-color: #e9e9e9 !important;
+}
+
+.table > :not(caption) > * > * {
+    background-color: #00000000 !important;
 }
 
 .alert-success {
@@ -28,4 +37,20 @@ span.bg-success {
 
 .btn.btn-outline-primary {
     --bs-btn-color: #0d6efd !important;
+}
+
+div:where(.swal2-container).swal2-backdrop-show,
+div:where(.swal2-container).swal2-noanimation {
+    backdrop-filter: blur(1px);
+    background: rgba(0, 0, 0, 0.1) !important;
+    transition: backdrop-filter 0.2s;
+}
+
+.swal2-styled.swal2-default-outline {
+    font-weight: 400;
+    margin: 0.25rem 0.125rem;
+}
+
+.swal2-confirm {
+    color: rgba(33, 37, 41, 0.75);
 }

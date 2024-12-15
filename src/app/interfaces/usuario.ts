@@ -4,6 +4,6 @@ export interface Usuario {
     apellido?: string;
     email: string;
     rol: string;
-    almacen_id?: number;
-    password?: string;
+    almacen: number;
+    telefono: number;
 }

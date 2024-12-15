@@ -1,10 +1,11 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { Status } from '../../interfaces/pedido.interface';
+import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Pedido } from '../../interfaces/pedido.interface';
 import { PedidosService } from '../../services/orders.service';
 import { FormsModule } from '@angular/forms';
 import { SelectorEstadoComponent } from '../selector-estado/selector-estado.component';
+import { AuthService } from '../../services/auth.service';
+import { Almacen } from '../../interfaces/almacen.interface';
 
 @Component({
     selector: 'app-encargado',
@@ -14,42 +15,26 @@ import { SelectorEstadoComponent } from '../selector-estado/selector-estado.comp
     styleUrl: './encargado.component.css',
 })
 export class EncargadoComponent {
+    authService = inject(AuthService);
+    pedidoService = inject(PedidosService);
+
     @ViewChild('modalDetails') modalElement!: ElementRef;
     pedidos: Pedido[] = [];
     pedido: Pedido;
     pedidosRecientes: Pedido[] = [];
+    almacen: number | null = null;
 
-    constructor(private pedidoService: PedidosService) {
-        this.pedido = {
-            origen: '',
-            destino: '',
-            matricula_camion: '',
-            estado: Status['Pendiente de pago'],
-            fecha_salida: '',
-        };
-        this.pedidoService.getAllPedidos().then((response) => {
-            this.pedidos = response.map((pedido) => ({
-                ...pedido,
-                fecha_salida: this.formatFecha(pedido.fecha_salida),
-            }));
-            this.filterPedidosRecientes();
+    ngOnInit() {
+        const { id, almacen }: any = this.authService.getUser();
+        this.almacen = almacen;
+        console.log(this.almacen, almacen)
+
+        
+        this.pedidoService.getAllMyPedidos(id).subscribe({
+            next: (response) => {
+                this.pedidos = response;
+            },
         });
-    }
-
-    // Formateamos la fecha al formato español 'dd/mm/yyyy'
-    formatFecha(fecha: string): string {
-        const date = new Date(fecha);
-        if (isNaN(date.getTime())) {
-            return '';
-        }
-
-        const options: Intl.DateTimeFormatOptions = {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-        };
-
-        return date.toLocaleDateString('es-ES', options); // Formato: dd/mm/yyyy
     }
 
     filterPedidosRecientes(): void {

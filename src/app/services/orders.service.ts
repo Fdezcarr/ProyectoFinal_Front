@@ -12,12 +12,22 @@ export class PedidosService {
     constructor(private http: HttpClient) {}
 
     // Método para obtener todos los pedidos
-    getAllPedidos(): Promise<Pedido[]> {
-        const token = localStorage.getItem('token');
-        const headers = { Authorization: `Bearer ${token}` };
-        return firstValueFrom(
-            this.http.get<Pedido[]>(this.apiUrl, { headers })
+    getAllPedidos(): Observable<Pedido[]> {
+        return this.http.get<Pedido[]>(this.apiUrl);
+    }
+
+    getAllMyPedidos(usuario_id: number): Observable<Pedido[]> {
+        return this.http.get<Pedido[]>(`${this.apiUrl}/usuario/${usuario_id}`);
+    }
+    getAllMyPedidosPendientes(usuario_id: number): Observable<Pedido[]> {
+        return this.http.get<Pedido[]>(
+            `${this.apiUrl}/usuario/${usuario_id}/pendiente`
         );
+    }
+    
+    getAllPedidosFromAlmacen(almacen_id: number) : Observable<Pedido[]>{
+        return this.http.get<Pedido[]>(`${this.apiUrl}/almacen/${almacen_id}`);
+
     }
 
     getById(id: number): Promise<Pedido> {

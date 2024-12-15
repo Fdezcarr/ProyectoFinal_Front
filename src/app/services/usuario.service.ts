@@ -18,6 +18,11 @@ export class UsuarioService {
         return this.http.get<any[]>(this.baseUrl, { headers });
     }
 
+    // Obtener todos los usuarios
+    getAllOperario(): Observable<any[]> {
+        return this.http.get<any[]>(`${this.baseUrl}/operario`);
+    }
+
     // Crear un nuevo usuario
     crearUsuario(usuario: any): Observable<any> {
         console.log(usuario);

@@ -3,9 +3,9 @@
         class="badge bg-warning-subtle text-muted border-0"
         (change)="estadoChange($event)"
     >
-        <option selected>{{ pedido.estado }}</option>
-        @for (estado of estadosFilter; track $index) {
-            <option [value]="estado" class="text-dark bg-light opacity-50">
+        
+        @for (estado of estados; track $index) {
+            <option [value]="estado" class="text-dark bg-light opacity-50" selected>
                 {{ estado }}
             </option>
         }
@@ -16,7 +16,7 @@
         (change)="estadoChange($event)"
     >
         <option selected>{{ pedido.estado }}</option>
-        @for (estado of estadosFilter; track $index) {
+        @for (estado of estados; track $index) {
             <option [value]="estado" class="text-dark bg-light opacity-50">
                 {{ estado }}
             </option>
@@ -28,7 +28,7 @@
         (change)="estadoChange($event)"
     >
         <option selected>{{ pedido.estado }}</option>
-        @for (estado of estadosFilter; track $index) {
+        @for (estado of estados; track $index) {
             <option [value]="estado" class="text-dark bg-light opacity-50">
                 {{ estado }}
             </option>

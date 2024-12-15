@@ -57,6 +57,7 @@
                 <option value="encargado">Encargado</option>
                 <option value="jefe">Jefe</option>
                 <option value="operario">Operario</option>
+                <option value="encargado">Encargado</option>
             </select>
         </div>
         <div class="col-md-3 col-sm-6">
@@ -285,13 +286,27 @@
     <!-- <div *ngIf="almacenSeleccionado" class="modal">
         <div class="modal-content">
             <h3>Editar Almacén</h3>
-            <input [(ngModel)]="almacenSeleccionado.nombre" class="form-control" placeholder="Nombre" />
-            <input [(ngModel)]="almacenSeleccionado.localizacion" class="form-control" placeholder="Localización" />
+            <input
+                [(ngModel)]="almacenSeleccionado.nombre"
+                class="form-control"
+                placeholder="Nombre"
+            />
+            <input
+                [(ngModel)]="almacenSeleccionado.localizacion"
+                class="form-control"
+                placeholder="Localización"
+            />
             <div class="modal-actions">
-                <button class="btn btn-success" (click)="guardarAlmacenEditado()">
+                <button
+                    class="btn btn-success"
+                    (click)="guardarAlmacenEditado()"
+                >
                     Guardar
                 </button>
-                <button class="btn btn-secondary" (click)="almacenSeleccionado = null">
+                <button
+                    class="btn btn-secondary"
+                    (click)="almacenSeleccionado = null"
+                >
                     Cancelar
                 </button>
             </div>

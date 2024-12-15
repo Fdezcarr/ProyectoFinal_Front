@@ -28,11 +28,11 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Credenciales según roles:
 * Jefe: 
-1. Correo electrónico: jose@gmail.com
+1. Correo electrónico: sara.alvarez@cargops.com
 2. Contraseña: 1234
 * Operario: 
-1. Correo electrónico: pepe@pepe.es
+1. Correo electrónico: laura.hernandez@cargops.com
 2. Contraseña: 1234
 * Encargado: 
-1. Correo electrónico: juan@juan.es
+1. Correo electrónico: marta.diaz@cargops.com
 2. Contraseña: 1234
