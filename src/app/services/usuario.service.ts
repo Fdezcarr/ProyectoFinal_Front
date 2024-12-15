@@ -12,15 +12,17 @@ export class UsuarioService {
     constructor(private http: HttpClient) {}
 
     // Obtener todos los usuarios
-    getUsuarios(): Observable<any[]> {
-        const token = localStorage.getItem('token');
-        const headers = { Authorization: `Bearer ${token}` };
-        return this.http.get<any[]>(this.baseUrl, { headers });
+    getUsuarios(): Observable<Usuario[]> {
+        return this.http.get<Usuario[]>(`${this.baseUrl}`);
     }
 
-    // Obtener todos los usuarios
+    // Obtener todos los operarios
     getAllOperario(): Observable<any[]> {
         return this.http.get<any[]>(`${this.baseUrl}/operario`);
+    }
+    // Obtener el encargado por id de almacén
+    getEncargadoByAlmacenId(almacen_id): Observable<any[]> {
+        return this.http.get<any[]>(`${this.baseUrl}/encargado/${almacen_id}`);
     }
 
     // Crear un nuevo usuario

@@ -24,11 +24,11 @@
                     <select
                         class="form-select"
                         [(ngModel)]="nuevoPedido.origen"
-                        [ngModelOptions]="{ standalone: true }"
+                        name="origen"
                     >
                         <option
                             *ngFor="let almacen of almacenes"
-                            [value]="almacen.nombre"
+                            [value]="almacen.id"
                         >
                             {{ almacen.nombre }}
                         </option>
@@ -36,23 +36,35 @@
                 </div>
                 <div class="mb-3">
                     <label for="destino" class="form-label">Destino</label>
-                    <app-selector-almacen
-                        [id]="'destino'"
-                    ></app-selector-almacen>
+                    <select
+                        class="form-select"
+                        [(ngModel)]="nuevoPedido.destino"
+                        name="destino"
+                        (change)="destinoChange($event)"
+                    >
+                        <option
+                            *ngFor="let almacen of almacenes"
+                            [value]="almacen.id"
+                        >
+                            {{ almacen.nombre }}
+                        </option>
+                    </select>
+                </div>
 
                     <div class="mb-3">
                         <label for="encargado" class="form-label">Encargado</label>
+                       <input type="text" [(ngModel)]="nuevoPedido.encargado" [placeholder]="nuevoPedido.encargado_nombre" class="form-control disabled" name="encargado" disabled >
                     </div>
-                </div>
                 <div class="mb-3">
                     <label for="fecha" class="form-label">Fecha</label>
                     <input
                         type="date"
                         class="form-control"
                         id="fecha"
-                        [(ngModel)]="nuevoPedido.fecha_salida"
+                        [(ngModel)]="nuevoPedido.fecha_creacion"
                         name="fecha"
                         required
+                        name="fecha_creacion"
                     />
                 </div>
                 <div class="mb-3">
@@ -100,7 +112,7 @@
                         [pedido]="pedido"
                     ></app-selector-estado>
                 </td>
-                <td>{{ pedido.fecha_salida | date: 'short' }}</td>
+                <td>{{ pedido.fecha_creacion | date: 'short' }}</td>
                 <!-- <td>
                     <button class="btn btn-sm btn-info me-2" (click)="actualizarEstado(pedido, 'En proceso')">
                         En proceso

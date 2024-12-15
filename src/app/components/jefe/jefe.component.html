@@ -1,13 +1,13 @@
 <div class="container">
-    <h2>Gestión de Usuarios</h2>
-
+    <div class="row usuarios">
+        <h2 class="col-12">Gestión de empleados</h2>
     <!-- Formulario añadir usuario -->
     <form
         *ngIf="!usuarioSeleccionado"
         (ngSubmit)="crearUsuario()"
-        class="row g-3 mt-3"
+        class="col-md-3"
     >
-        <div class="col-md-3 col-sm-6">
+        <div class="">
             <input
                 [(ngModel)]="nuevoUsuario.nombre"
                 name="nombre"
@@ -16,7 +16,7 @@
                 required
             />
         </div>
-        <div class="col-md-3 col-sm-6">
+        <div class="">
             <input
                 [(ngModel)]="nuevoUsuario.apellido"
                 name="apellido"
@@ -25,7 +25,7 @@
                 required
             />
         </div>
-        <div class="col-md-3 col-sm-6">
+        <div class="">
             <input
                 [(ngModel)]="nuevoUsuario.email"
                 name="email"
@@ -37,7 +37,8 @@
                 El email ya está registrado
             </div>
         </div>
-        <div class="col-md-3 col-sm-6">
+       
+        <div class="">
             <input
                 [(ngModel)]="nuevoUsuario.password"
                 name="password"
@@ -46,7 +47,15 @@
                 required
             />
         </div>
-        <div class="col-md-3 col-sm-6">
+         <div class="">
+            <input
+                [(ngModel)]="nuevoUsuario.telefono"
+                name="telefono"
+                class="form-control"
+                placeholder="Teléfono"
+            />
+        </div>
+        <div class="">
             <select
                 [(ngModel)]="nuevoUsuario.rol"
                 name="rol"
@@ -60,15 +69,15 @@
                 <option value="encargado">Encargado</option>
             </select>
         </div>
-        <div class="col-md-3 col-sm-6">
+        <div class="">
             <select
-                [(ngModel)]="nuevoUsuario.almacen_id"
+                [(ngModel)]="nuevoUsuario.almacen"
                 name="almacenId"
                 class="form-select"
                 required
             >
                 <option value="" disabled selected>
-                    Seleccione un almacén
+                    Selecciona un almacén
                 </option>
                 <option *ngFor="let almacen of almacenes" [value]="almacen.id">
                     {{ almacen.nombre }}
@@ -88,7 +97,7 @@
         (ngSubmit)="editarUsuario()"
         class="row g-3 mt-3"
     >
-        <div class="col-md-3 col-sm-6">
+        <div class="">
             <input
                 [(ngModel)]="usuarioSeleccionado.nombre"
                 name="nombre"
@@ -97,7 +106,7 @@
                 required
             />
         </div>
-        <div class="col-md-3 col-sm-6">
+        <div class="">
             <input
                 [(ngModel)]="usuarioSeleccionado.apellido"
                 name="apellido"
@@ -106,7 +115,7 @@
                 required
             />
         </div>
-        <div class="col-md-3 col-sm-6">
+        <div class="">
             <input
                 [(ngModel)]="usuarioSeleccionado.email"
                 name="email"
@@ -118,7 +127,7 @@
                 El email ya está registrado
             </div>
         </div>
-        <div class="col-md-3 col-sm-6">
+        <div class="">
             <select
                 [(ngModel)]="usuarioSeleccionado.rol"
                 name="rol"
@@ -130,9 +139,9 @@
                 <option value="operario">Operario</option>
             </select>
         </div>
-        <div class="col-md-3 col-sm-6">
+        <div class="">
             <select
-                [(ngModel)]="usuarioSeleccionado.almacen_id"
+                [(ngModel)]="usuarioSeleccionado.almacen"
                 name="almacenId"
                 class="form-select"
                 required
@@ -152,13 +161,12 @@
         </div>
     </form>
 
-    <table class="table mt-4">
+    <table class="table mt-4 col">
         <thead>
             <tr>
                 <th>Nombre</th>
                 <th>Apellido</th>
                 <th>Email</th>
-                <th>Contraseña</th>
                 <th>Rol</th>
                 <th>Almacén</th>
                 <th>Acciones</th>
@@ -169,9 +177,8 @@
                 <td>{{ usuario.nombre }}</td>
                 <td>{{ usuario.apellido }}</td>
                 <td>{{ usuario.email }}</td>
-                <td>******</td>
                 <td>{{ usuario.rol }}</td>
-                <td>{{ usuario.almacen_id }}</td>
+                <td>{{ usuario.almacen_nombre }}</td>
                 <td>
                     <button
                         class="btn btn-warning btn-sm me-2"
@@ -312,4 +319,5 @@
             </div>
         </div>
     </div> -->
+</div>
 </div>

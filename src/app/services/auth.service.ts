@@ -11,6 +11,7 @@ interface payload extends JwtPayload {
     usuario_nombre: string;
     usuario_email: string;
     usuario_almacen: number;
+    usuario_almacen_nombre: string,
     usuario_telefono: number;
 }
 
@@ -51,6 +52,7 @@ export class AuthService {
                 nombre: data.usuario_nombre,
                 email: data.usuario_email,
                 almacen: data.usuario_almacen,
+                almacen_nombre: data.usuario_almacen_nombre,
                 telefono: data.usuario_telefono,
             };
             return this.usuario;
