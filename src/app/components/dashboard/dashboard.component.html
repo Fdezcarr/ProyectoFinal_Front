@@ -1,11 +1,11 @@
-<h1 id="top">Hola, {{usuario.nombre}}</h1>
+<h1 id="top">Hola, {{ usuario.nombre }}</h1>
 
-@if(usuarioRol === 'encargado'){
-     <app-encargado></app-encargado>
- }
- @if(usuarioRol === 'jefe'){
-     <app-jefe></app-jefe>
- }
- @if(usuarioRol === 'operario'){
-     <app-operario></app-operario>
- }
+@if (usuarioRol === 'encargado') {
+    <app-encargado></app-encargado>
+}
+@if (usuarioRol === 'jefe') {
+    <app-jefe></app-jefe>
+}
+@if (usuarioRol === 'operario') {
+    <app-operario></app-operario>
+}

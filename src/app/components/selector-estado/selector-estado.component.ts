@@ -13,13 +13,13 @@ export class SelectorEstadoComponent {
     pedidosService = inject(PedidosService);
 
     estados: any = [];
-    estadosFilter : any[] = []
+    estadosFilter: any[] = [];
 
     async ngOnInit() {
         this.estados = await this.pedidosService.getPedidosStatus();
-         this.estadosFilter = this.estados.filter(
-             (estado: any) => estado !== this.pedido.estado
-         );
+        this.estadosFilter = this.estados.filter(
+            (estado: any) => estado !== this.pedido.estado
+        );
     }
 
     async estadoChange(event: Event) {
@@ -28,8 +28,7 @@ export class SelectorEstadoComponent {
         this.pedidosService
             .patchEstadoPedido(this.pedido.id, this.pedido)
             .subscribe({
-                next: (updatedPedido) => {                    
-                },
+                next: (updatedPedido) => {},
                 error: (err) => {
                     console.error('Error al actualizar el pedido:', err);
                 },

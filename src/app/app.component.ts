@@ -11,7 +11,7 @@ import { Router, RouterOutlet } from '@angular/router';
 export class AppComponent {
     title = 'Proyecto';
 
-    router = inject(Router)
+    router = inject(Router);
 
     ngOnInit() {
         const token = localStorage.getItem('token');

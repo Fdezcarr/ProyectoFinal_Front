@@ -1,5 +1,7 @@
 <nav class="navbar navbar-expand-lg bg-dark-subtle p-3">
-    <ul class="navbar-nav d-flex flex-column justify-content-between h-100 py-2">
+    <ul
+        class="navbar-nav d-flex flex-column justify-content-between h-100 py-2"
+    >
         <li class="nav-item">
             <a
                 class="nav-link"
@@ -10,11 +12,15 @@
                 alt="Subir"
             >
                 <i class="fa-solid fa-arrow-up"></i>
-               </a
-            >
+            </a>
         </li>
         <li class="nav-item">
-             <img src="/assets/cargo ops_logo.svg" alt="Carg.ops" title='Hola, {{usuario.nombre}}' class="logo"/>
+            <img
+                src="/assets/cargo ops_logo.svg"
+                alt="Carg.ops"
+                title="Hola, {{ usuario.nombre }}"
+                class="logo"
+            />
         </li>
         <li class="nav-item">
             <a
@@ -24,9 +30,13 @@
                 (click)="logOut()"
             >
                 <i class="fa-solid fa-right-to-bracket"></i>
-                </a
-            >
+            </a>
         </li>
     </ul>
-    <img src="/assets/avatar_usuario.svg" alt="Usuario" width="30" [title]="usuario.nombre" />
+    <img
+        src="/assets/avatar_usuario.svg"
+        alt="Usuario"
+        width="30"
+        [title]="usuario.nombre"
+    />
 </nav>

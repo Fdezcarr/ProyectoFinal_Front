@@ -1,8 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { NavbarComponent } from '../../navbar/navbar.component';
-import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
-    AbstractControl,
     FormControl,
     FormGroup,
     ReactiveFormsModule,
@@ -10,12 +9,11 @@ import {
 } from '@angular/forms';
 import { Pedido } from '../../../interfaces/pedido.interface';
 import { PedidosService } from '../../../services/orders.service';
-import { firstValueFrom } from 'rxjs';
 
 @Component({
     selector: 'app-formulario-pedido',
     standalone: true,
-    imports: [NavbarComponent, RouterOutlet, ReactiveFormsModule],
+    imports: [NavbarComponent, ReactiveFormsModule],
     templateUrl: './formulario-pedido.component.html',
     styleUrl: './formulario-pedido.component.css',
 })
@@ -29,7 +27,6 @@ export class FormularioPedidoComponent {
     tipo: string = 'Nuevo';
     submitBtn: string = 'Enviar';
     pedido_id!: number;
-    // ExpEmail = /^[a-zA-Z0–9._-]+@[a-zA-Z0–9.-]+\.[a-zA-Z]{2,10}$/;
 
     constructor() {
         this.pedidoForm = new FormGroup({
@@ -87,21 +84,23 @@ export class FormularioPedidoComponent {
                         this.pedido_id,
                         this.pedidoForm.value
                     );
-                    const pedidoUpdate = await firstValueFrom( this.pedidoService.updatePedido(
-                        this.pedido_id,
-                        this.pedidoForm.value
-                    ));
                     setTimeout(() => this.formSuccess(), 3000);
+                    this.pedidoService
+                        .updatePedido(this.pedido_id, this.pedidoForm.value)
+                        .then((response) => {
+                            this.formSuccess();
+                        });
                 } catch (error) {
                     console.log(error);
                 }
             } else {
                 try {
                     console.log('Form Data:', this.pedidoForm.value);
-                    const pedidoCreate = await this.pedidoService.insertPedido(
-                        this.pedidoForm.value
-                    );
-                    setTimeout(() => this.formSuccess(), 3000);
+                    this.pedidoService
+                        .insertPedido(this.pedidoForm.value)
+                        .then((response) => {
+                            this.formSuccess();
+                        });
                 } catch (error) {
                     console.log(error);
                 }

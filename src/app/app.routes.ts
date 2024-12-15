@@ -17,23 +17,6 @@ export const routes: Routes = [
         component: InterfazComponent,
         canActivate: [authGuard],
     },
-
-    // {
-    //     path: 'nuevo-pedido',
-    //     canActivate: [authGuard],
-    //     component: FormularioPedidoComponent,
-    // },
-    // {
-    //     path: 'pedido/:id',
-    //     canActivate: [authGuard],
-    //     component: PedidoComponent,
-    // },
-    // {
-    //     path: 'pedido/:id/actualizar',
-    //     canActivate: [authGuard],
-    //     component: FormularioPedidoComponent,
-    // },
-
     {
         path: 'encargado',
         children: [

@@ -1,19 +1,10 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Status } from '../../interfaces/pedido.interface';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
 import { Pedido } from '../../interfaces/pedido.interface';
 import { PedidosService } from '../../services/orders.service';
-import {
-    FormBuilder,
-    FormControl,
-    FormGroup,
-    FormsModule,
-    ReactiveFormsModule,
-    Validators,
-} from '@angular/forms';
-import { SelectorEstadoComponent } from "../selector-estado/selector-estado.component";
-declare var bootstrap: any;
+import { FormsModule } from '@angular/forms';
+import { SelectorEstadoComponent } from '../selector-estado/selector-estado.component';
 
 @Component({
     selector: 'app-encargado',
@@ -22,17 +13,13 @@ declare var bootstrap: any;
     templateUrl: './encargado.component.html',
     styleUrl: './encargado.component.css',
 })
-export class EncargadoComponent implements OnInit {
+export class EncargadoComponent {
     @ViewChild('modalDetails') modalElement!: ElementRef;
-    nameUser: string;
     pedidos: Pedido[] = [];
     pedido: Pedido;
     pedidosRecientes: Pedido[] = [];
 
-    constructor(
-        private route: ActivatedRoute,
-        private pedidoService: PedidosService
-    ) {
+    constructor(private pedidoService: PedidosService) {
         this.pedido = {
             origen: '',
             destino: '',
@@ -40,68 +27,13 @@ export class EncargadoComponent implements OnInit {
             estado: Status['Pendiente de pago'],
             fecha_salida: '',
         };
-        this.pedidoService.getAllPedidos().subscribe({
-            next: (response) => {
-                console.log(response);
-                this.pedidos = response.map((pedido) => ({
-                    ...pedido,
-                    fecha_salida: this.formatFecha(pedido.fecha_salida),
-                }));
-                this.filterPedidosRecientes();
-            },
+        this.pedidoService.getAllPedidos().then((response) => {
+            this.pedidos = response.map((pedido) => ({
+                ...pedido,
+                fecha_salida: this.formatFecha(pedido.fecha_salida),
+            }));
+            this.filterPedidosRecientes();
         });
-    }
-
-    ngOnInit(): void {
-        this.route.queryParams.subscribe((params) => {
-            this.nameUser = params['name'];
-        });
-    }
-
-    openModalDetails(pedidoId: number) {
-        console.log(pedidoId);
-
-        this.getPedidoDetails(pedidoId);
-        var myModal = new bootstrap.Modal(
-            document.getElementById('modalDetails')
-        );
-        myModal.show();
-    }
-
-    openModalEdit(pedidoId: number) {
-        this.getPedidoDetails(pedidoId);
-        var myModal = new bootstrap.Modal(document.getElementById('modalEdit'));
-        myModal.show();
-    }
-
-    closeModal() {
-        const backdrops = document.querySelectorAll('.modal-backdrop');
-        backdrops.forEach((backdrop) => backdrop.remove());
-    }
-
-    getPedidoDetails(id: number) {
-        this.pedido = this.pedidos[id - 1];
-    }
-
-    getUserStatus(estado: Status): string {
-        switch (estado) {
-            case Status.Aceptado:
-                return 'bg-primary';
-            case Status.Cancelado:
-                return 'bg-danger';
-            case Status['En revisión']:
-                return 'bg-warning text-dark';
-            case Status.Entregado:
-                return 'bg-success';
-            case Status.Enviado:
-                return 'bg-purple';
-            case Status['Pendiente de envío']:
-                return 'bg-secondary text-light';
-            case Status['Pendiente de pago']:
-                return 'bg-light text-dark';
-            default:
-                return '';
-        }
     }
 
     // Formateamos la fecha al formato español 'dd/mm/yyyy'
@@ -136,36 +68,15 @@ export class EncargadoComponent implements OnInit {
         });
     }
 
-    getEstadoKey(estado: string): string {
-        // Mapeamos el valor a su key en el enum
-        const estadoKey = Object.keys(Status).find(
-            (key) => Status[key] === estado
-        );
-        return estadoKey || estado;
-    }
-
     async guardarPedido() {
-        //TRY CATCH en caso de usar PROMISE
-        // console.log('Submitting pedido:', this.pedido);
-        // try {
-        //     const updatedPedido = await this.pedidoService.updatePedido(
-        //         this.pedido.id,
-        //         this.pedido
-        //     );
-        //     alert('Pedido actualizado');
-        //     console.log('Pedido updated successfully:', updatedPedido);
-        // } catch (err) {
-        //     console.error('Error al actualizar el pedido:', err);
-        //     alert('Hubo un error al actualizar el pedido');
-        // }
-        
-        this.pedidoService.updatePedido(this.pedido.id, this.pedido).subscribe({
-            next: (updatedPedido) => {
-                alert('Pedido actualizado');
-            },
-            error: (err) => {
-                console.error('Error al actualizar el pedido:', err);
-            },
-        });
+        try {
+            this.pedidoService
+                .updatePedido(this.pedido.id, this.pedido)
+                .then((response) => {
+                    alert('Pedido actualizado');
+                });
+        } catch (error) {
+            console.error('Error al actualizar el pedido:', error);
+        }
     }
 }

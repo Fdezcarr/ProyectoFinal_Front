@@ -1,94 +1,300 @@
 <div class="container">
-  <h2>Gestión de Usuarios</h2>
-  
-  
-  <form (ngSubmit)="crearUsuario()" class="row g-3 mt-3">
-    <div class="col-md-3 col-sm-6">
-      <input [(ngModel)]="nuevoUsuario.nombre" name="nombre" class="form-control" placeholder="Nombre" required />
-    </div>
-    <div class="col-md-3 col-sm-6">
-      <input [(ngModel)]="nuevoUsuario.apellido" name="apellido" class="form-control" placeholder="Apellido" required />
-    </div>
-    <div class="col-md-3 col-sm-6">
-      <input
-        [(ngModel)]="nuevoUsuario.email"
-        (blur)="verificarEmail()"
-        name="email"
-        class="form-control"
-        placeholder="Email"
-        required
-      />
-      <div *ngIf="emailDuplicado" class="text-danger">El email ya está registrado</div>
-    </div>
-    <div class="col-md-3 col-sm-6">
-      <input [(ngModel)]="nuevoUsuario.password" name="password" class="form-control" placeholder="Contraseña" required />
-    </div>
-    <div class="col-md-3 col-sm-6">
-      <select [(ngModel)]="nuevoUsuario.almacenId" name="almacenId" class="form-select" required>
-        <option value="" disabled selected>Seleccione un almacén</option>
-        <option *ngFor="let almacen of almacenes" [value]="almacen.id">
-          {{ almacen.nombre }}
-        </option>
-      </select>
-    </div>
-    <div class="col-12 text-center">
-      <button type="submit" class="btn btn-primary">Agregar Usuario</button>
-    </div>
-  </form>
+    <h2>Gestión de Usuarios</h2>
 
-  
-  <table class="table mt-4">
-    <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Apellido</th>
-        <th>Email</th>
-        <th>Contraseña</th>
-        <th>Rol</th>
-        <th>Almacén</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let usuario of usuarios">
-        <td>{{ usuario.nombre }}</td>
-        <td>{{ usuario.apellido }}</td>
-        <td>{{ usuario.email }}</td>
-        <td>******</td>
-        <td>{{ usuario.rol }}</td>
-        <td>{{ usuario.almacenId }}</td>
-        <td>
-          <button class="btn btn-warning btn-sm" (click)="abrirModalUsuario(usuario)">Editar</button>
-          <button class="btn btn-danger btn-sm" (click)="eliminarUsuario(usuario.id)">Eliminar</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+    <!-- Formulario añadir usuario -->
+    <form
+        *ngIf="!usuarioSeleccionado"
+        (ngSubmit)="crearUsuario()"
+        class="row g-3 mt-3"
+    >
+        <div class="col-md-3 col-sm-6">
+            <input
+                [(ngModel)]="nuevoUsuario.nombre"
+                name="nombre"
+                class="form-control"
+                placeholder="Nombre"
+                required
+            />
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <input
+                [(ngModel)]="nuevoUsuario.apellido"
+                name="apellido"
+                class="form-control"
+                placeholder="Apellido"
+                required
+            />
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <input
+                [(ngModel)]="nuevoUsuario.email"
+                name="email"
+                class="form-control"
+                placeholder="Email"
+                required
+            />
+            <div *ngIf="emailDuplicado" class="text-danger">
+                El email ya está registrado
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <input
+                [(ngModel)]="nuevoUsuario.password"
+                name="password"
+                class="form-control"
+                placeholder="Contraseña"
+                required
+            />
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <select
+                [(ngModel)]="nuevoUsuario.rol"
+                name="rol"
+                class="form-select"
+                required
+            >
+                <option value="" disabled selected>Selecciona un rol</option>
+                <option value="encargado">Encargado</option>
+                <option value="jefe">Jefe</option>
+                <option value="operario">Operario</option>
+            </select>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <select
+                [(ngModel)]="nuevoUsuario.almacen_id"
+                name="almacenId"
+                class="form-select"
+                required
+            >
+                <option value="" disabled selected>
+                    Seleccione un almacén
+                </option>
+                <option *ngFor="let almacen of almacenes" [value]="almacen.id">
+                    {{ almacen.nombre }}
+                </option>
+            </select>
+        </div>
+        <div class="col-12 text-center">
+            <button type="submit" class="btn btn-primary">
+                Agregar Usuario
+            </button>
+        </div>
+    </form>
 
- 
-  <div *ngIf="usuarioSeleccionado" class="modal">
-    <div class="modal-content">
-      <h3>Editar Usuario</h3>
-      <input [(ngModel)]="usuarioSeleccionado.nombre" class="form-control" placeholder="Nombre" />
-      <input [(ngModel)]="usuarioSeleccionado.apellido" class="form-control" placeholder="Apellido" />
-      <input [(ngModel)]="usuarioSeleccionado.email" class="form-control" placeholder="Email" />
-      <div class="modal-actions">
-        <button class="btn btn-success" (click)="guardarUsuarioEditado()">Guardar</button>
-        <button class="btn btn-secondary" (click)="usuarioSeleccionado = null">Cancelar</button>
-      </div>
-    </div>
-  </div>
+    <!-- Formulario editar usuario -->
+    <form
+        *ngIf="usuarioSeleccionado"
+        (ngSubmit)="editarUsuario()"
+        class="row g-3 mt-3"
+    >
+        <div class="col-md-3 col-sm-6">
+            <input
+                [(ngModel)]="usuarioSeleccionado.nombre"
+                name="nombre"
+                class="form-control"
+                placeholder="Nombre"
+                required
+            />
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <input
+                [(ngModel)]="usuarioSeleccionado.apellido"
+                name="apellido"
+                class="form-control"
+                placeholder="Apellido"
+                required
+            />
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <input
+                [(ngModel)]="usuarioSeleccionado.email"
+                name="email"
+                class="form-control"
+                placeholder="Email"
+                required
+            />
+            <div *ngIf="emailDuplicado" class="text-danger">
+                El email ya está registrado
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <select
+                [(ngModel)]="usuarioSeleccionado.rol"
+                name="rol"
+                class="form-select"
+                required
+            >
+                <option value="encargado">Encargado</option>
+                <option value="jefe">Jefe</option>
+                <option value="operario">Operario</option>
+            </select>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <select
+                [(ngModel)]="usuarioSeleccionado.almacen_id"
+                name="almacenId"
+                class="form-select"
+                required
+            >
+                <option value="" disabled selected>
+                    Seleccione un almacén
+                </option>
+                <option *ngFor="let almacen of almacenes" [value]="almacen.id">
+                    {{ almacen.nombre }}
+                </option>
+            </select>
+        </div>
+        <div class="col-12 text-center">
+            <button type="submit" class="btn btn-warning">
+                Editar Usuario
+            </button>
+        </div>
+    </form>
 
-  
-  <div *ngIf="almacenSeleccionado" class="modal">
-    <div class="modal-content">
-      <h3>Editar Almacén</h3>
-      <input [(ngModel)]="almacenSeleccionado.nombre" class="form-control" placeholder="Nombre" />
-      <input [(ngModel)]="almacenSeleccionado.localizacion" class="form-control" placeholder="Localización" />
-      <div class="modal-actions">
-        <button class="btn btn-success" (click)="guardarAlmacenEditado()">Guardar</button>
-        <button class="btn btn-secondary" (click)="almacenSeleccionado = null">Cancelar</button>
-      </div>
-    </div>
-  </div>
+    <table class="table mt-4">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Email</th>
+                <th>Contraseña</th>
+                <th>Rol</th>
+                <th>Almacén</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let usuario of usuarios">
+                <td>{{ usuario.nombre }}</td>
+                <td>{{ usuario.apellido }}</td>
+                <td>{{ usuario.email }}</td>
+                <td>******</td>
+                <td>{{ usuario.rol }}</td>
+                <td>{{ usuario.almacen_id }}</td>
+                <td>
+                    <button
+                        class="btn btn-warning btn-sm me-2"
+                        (click)="cargarUsuarioAEditar(usuario)"
+                    >
+                        Editar
+                    </button>
+                    <button
+                        class="btn btn-danger btn-sm"
+                        (click)="eliminarUsuario(usuario.id)"
+                    >
+                        Eliminar
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Gestión de Almacenes</h2>
+
+    <!-- Formulario añadir almacén -->
+    <form
+        *ngIf="!almacenSeleccionado"
+        (ngSubmit)="crearAlmacen()"
+        class="row g-3 mt-3"
+    >
+        <div class="col-md-6">
+            <input
+                [(ngModel)]="nuevoAlmacen.nombre"
+                name="nombre"
+                class="form-control"
+                placeholder="Nombre del Almacén"
+                required
+            />
+        </div>
+        <div class="col-md-6">
+            <input
+                [(ngModel)]="nuevoAlmacen.localizacion"
+                name="localizacion"
+                class="form-control"
+                placeholder="Localización"
+                required
+            />
+        </div>
+        <div class="col-12 text-center">
+            <button type="submit" class="btn btn-primary">
+                Agregar Almacén
+            </button>
+        </div>
+    </form>
+
+    <!-- Formulario editar almacén -->
+    <form
+        *ngIf="almacenSeleccionado"
+        (ngSubmit)="editarAlmacen()"
+        class="row g-3 mt-3"
+    >
+        <div class="col-md-6">
+            <input
+                [(ngModel)]="almacenSeleccionado.nombre"
+                name="nombre"
+                class="form-control"
+                placeholder="Nombre del Almacén"
+                required
+            />
+        </div>
+        <div class="col-md-6">
+            <input
+                [(ngModel)]="almacenSeleccionado.localizacion"
+                name="localizacion"
+                class="form-control"
+                placeholder="Localización"
+                required
+            />
+        </div>
+        <div class="col-12 text-center">
+            <button type="submit" class="btn btn-warning">
+                Editar Almacén
+            </button>
+        </div>
+    </form>
+
+    <table class="table mt-4">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Localización</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let almacen of almacenes">
+                <td>{{ almacen.nombre }}</td>
+                <td>{{ almacen.localizacion }}</td>
+                <td>
+                    <button
+                        class="btn btn-warning btn-sm me-2"
+                        (click)="cargarAlmacenAEditar(almacen)"
+                    >
+                        Editar
+                    </button>
+                    <button
+                        class="btn btn-danger btn-sm"
+                        (click)="eliminarAlmacen(almacen.id)"
+                    >
+                        Eliminar
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- <div *ngIf="almacenSeleccionado" class="modal">
+        <div class="modal-content">
+            <h3>Editar Almacén</h3>
+            <input [(ngModel)]="almacenSeleccionado.nombre" class="form-control" placeholder="Nombre" />
+            <input [(ngModel)]="almacenSeleccionado.localizacion" class="form-control" placeholder="Localización" />
+            <div class="modal-actions">
+                <button class="btn btn-success" (click)="guardarAlmacenEditado()">
+                    Guardar
+                </button>
+                <button class="btn btn-secondary" (click)="almacenSeleccionado = null">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div> -->
 </div>

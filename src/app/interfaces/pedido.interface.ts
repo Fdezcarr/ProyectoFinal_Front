@@ -8,11 +8,7 @@ export interface Pedido {
 }
 
 export enum Status {
-    'Pendiente de pago' = 'pendiente_de_pago',
-    'Aceptado' = 'aceptado',
-    'Cancelado' = 'cancelado',
-    'En revisión' = 'en_revision',
-    'Pendiente de envío' = 'pendiente_de_envio',
-    'Enviado' = 'enviado',
-    'Entregado' = 'entregado',
+    'completado' = 'completado',
+    'pendiente' = 'pendiente',
+    'revisando' = 'revisando',
 }

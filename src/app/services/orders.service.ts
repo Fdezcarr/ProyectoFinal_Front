@@ -12,10 +12,12 @@ export class PedidosService {
     constructor(private http: HttpClient) {}
 
     // Método para obtener todos los pedidos
-    getAllPedidos(): Observable<Pedido[]> {
+    getAllPedidos(): Promise<Pedido[]> {
         const token = localStorage.getItem('token');
         const headers = { Authorization: `Bearer ${token}` };
-        return this.http.get<Pedido[]>(this.apiUrl, { headers });
+        return firstValueFrom(
+            this.http.get<Pedido[]>(this.apiUrl, { headers })
+        );
     }
 
     getById(id: number): Promise<Pedido> {
@@ -30,15 +32,9 @@ export class PedidosService {
         return firstValueFrom(this.http.post<Pedido>(`${this.apiUrl}`, pedido));
     }
 
-    // PROMISE
-    // updatePedido(id: number, pedido: Pedido): Promise<Pedido> {
-    // const url = `${this.apiUrl}/${id}`;
-    // return firstValueFrom(this.http.put<Pedido>(url, pedido));
-    // }
-    updatePedido(id: number, pedido: Pedido): Observable<Pedido> {
-        const { origen, destino, matricula_camion, estado } = pedido;
+    updatePedido(id: number, pedido: Pedido): Promise<Pedido> {
         const url = `${this.apiUrl}/${id}`;
-        return this.http.put<Pedido>(url, pedido);
+        return firstValueFrom(this.http.put<Pedido>(url, pedido));
     }
 
     patchEstadoPedido(id: number, pedido: Pedido): Observable<Pedido> {

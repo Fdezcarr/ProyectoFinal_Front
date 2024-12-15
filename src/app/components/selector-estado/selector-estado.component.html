@@ -1,22 +1,37 @@
-@if(pedido.estado === 'pendiente'){
-    <select class="badge bg-warning-subtle text-muted border-0" (change)="estadoChange($event)">
+@if (pedido.estado === 'pendiente') {
+    <select
+        class="badge bg-warning-subtle text-muted border-0"
+        (change)="estadoChange($event)"
+    >
         <option selected>{{ pedido.estado }}</option>
         @for (estado of estadosFilter; track $index) {
-            <option [value]="estado" class="text-dark bg-light opacity-50">{{ estado }}</option>
+            <option [value]="estado" class="text-dark bg-light opacity-50">
+                {{ estado }}
+            </option>
         }
-    </select>   
+    </select>
 } @else if (pedido.estado === 'revisando') {
-        <select class="badge bg-info-subtle text-muted border-0" (change)="estadoChange($event)">
+    <select
+        class="badge bg-info-subtle text-muted border-0"
+        (change)="estadoChange($event)"
+    >
         <option selected>{{ pedido.estado }}</option>
         @for (estado of estadosFilter; track $index) {
-            <option [value]="estado" class="text-dark bg-light opacity-50">{{ estado }}</option>
-        }   
-    </select> 
-} @else if (pedido.estado === 'completo') {
-        <select class="badge bg-success-subtle text-muted border-0" (change)="estadoChange($event)">
+            <option [value]="estado" class="text-dark bg-light opacity-50">
+                {{ estado }}
+            </option>
+        }
+    </select>
+} @else if (pedido.estado === 'completado') {
+    <select
+        class="badge bg-success-subtle text-muted border-0"
+        (change)="estadoChange($event)"
+    >
         <option selected>{{ pedido.estado }}</option>
         @for (estado of estadosFilter; track $index) {
-            <option [value]="estado" class="text-dark bg-light opacity-50">{{ estado }}</option>
-        }   
-    </select> 
+            <option [value]="estado" class="text-dark bg-light opacity-50">
+                {{ estado }}
+            </option>
+        }
+    </select>
 }

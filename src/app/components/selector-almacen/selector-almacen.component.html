@@ -1,6 +1,5 @@
-
 <select class="form-select form-select-sm" [id]="id">
     @for (almacen of almacenes; track $index) {
-        <option selected  [value]="almacen.nombre">{{ almacen.nombre }}</option>
+        <option selected [value]="almacen.nombre">{{ almacen.nombre }}</option>
     }
 </select>

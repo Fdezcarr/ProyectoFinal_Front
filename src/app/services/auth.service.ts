@@ -42,12 +42,12 @@ export class AuthService {
 
         try {
             const data = jwtDecode<payload>(token);
-            
+
             this.usuario = {
-              id: data.usuario_id,
-              rol: data.usuario_rol,
-              nombre: data.usuario_nombre,
-              email: data.usuario_email,
+                id: data.usuario_id,
+                rol: data.usuario_rol,
+                nombre: data.usuario_nombre,
+                email: data.usuario_email,
             };
             return this.usuario;
         } catch (err) {

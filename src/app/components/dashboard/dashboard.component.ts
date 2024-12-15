@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { EncargadoComponent } from '../encargado/encargado.component';
 import { AuthService } from '../../services/auth.service';
-import { JefeComponent } from "../jefe/jefe.component";
-import { OperarioComponent } from "../operario/operario.component";
+import { JefeComponent } from '../jefe/jefe.component';
+import { OperarioComponent } from '../operario/operario.component';
 import { Usuario } from '../../interfaces/usuario';
 
 @Component({
@@ -14,14 +14,14 @@ import { Usuario } from '../../interfaces/usuario';
 })
 export class DashboardComponent {
     authService = inject(AuthService);
-    usuario : Usuario | null;
+    usuario: Usuario | null;
     usuarioRol: string | null = null;
-    
+
     ngOnInit() {
-        this.usuarioRol = this.authService.getUser().rol
-        this.usuario = this.authService.getUser()
+        this.usuarioRol = this.authService.getUser().rol;
+        this.usuario = this.authService.getUser();
     }
-    
+
     hasRole(role: string): boolean {
         console.log(this.usuarioRol);
         return this.usuarioRol === role;

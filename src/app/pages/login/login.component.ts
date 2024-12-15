@@ -53,17 +53,17 @@ export class LoginComponent {
     //     });
     // }
 
-async checkUser(){
-    if(this.ReactiveForm.valid){
-        try {
-            const res = await this.authService.login(this.ReactiveForm.value);
-            localStorage.setItem('token', res.token)
-            this.router.navigateByUrl('/dashboard')
-        } catch (error) {
-            console.log(error)
+    async checkUser() {
+        if (this.ReactiveForm.valid) {
+            try {
+                const res = await this.authService.login(
+                    this.ReactiveForm.value
+                );
+                localStorage.setItem('token', res.token);
+                this.router.navigateByUrl('/dashboard');
+            } catch (error) {
+                console.log(error);
+            }
         }
     }
-}
-
-
 }

@@ -17,7 +17,6 @@ export class NavbarComponent {
 
     ngOnInit() {
         this.usuario = this.authService.getUser();
-        console.log(this.usuario)
     }
 
     logOut() {

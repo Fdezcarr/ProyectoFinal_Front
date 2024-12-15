@@ -58,12 +58,15 @@
                     </span>
                 </div>
 
-                @if(tipo !== "Nuevo"){
-
+                @if (tipo !== 'Nuevo') {
                     <div class="form-group mb-3">
                         <label for="estado" class="form-label">Estado</label>
-                        
-                        <select id="estado" class="form-select" formControlName="estado">
+
+                        <select
+                            id="estado"
+                            class="form-select"
+                            formControlName="estado"
+                        >
                             <option value="pendiente">Pendiente</option>
                             <option value="revisando">Revisando</option>
                             <option value="completo">Completo</option>
@@ -72,12 +75,19 @@
                             <p class="text-danger">El campo es obligatorio</p>
                         }
                     </div>
-                } @else{
+                } @else {
                     <div class="form-group mb-3">
-                        <label for="fecha_salida" class="form-label">Fecha de salida</label>
-                        
-                        <input type="date" id="fecha_salida" class="form-select" formControlName="fecha_salida">
-                          
+                        <label for="fecha_salida" class="form-label"
+                            >Fecha de salida</label
+                        >
+
+                        <input
+                            type="date"
+                            id="fecha_salida"
+                            class="form-select"
+                            formControlName="fecha_salida"
+                        />
+
                         @if (checkValidation('fecha_salida', 'required')) {
                             <p class="text-danger">El campo es obligatorio</p>
                         }
@@ -153,18 +163,22 @@
             <p class="text-danger">El campo es obligatorio</p>
             }
         </div> -->
-        <div class="mt-2 d-flex">
-
-            @if (tipo === 'Nuevo') {
-                <button type="reset" class="btn btn-outline-danger me-2">Borrar datos</button>
-            }
-            <input
-            type="submit"
-            [value]="submitBtn"
-            [disabled]="!pedidoForm.valid"
-            class="btn btn-primary"
-            />
-        </div>
+                <div class="mt-2 d-flex">
+                    @if (tipo === 'Nuevo') {
+                        <button
+                            type="reset"
+                            class="btn btn-outline-danger me-2"
+                        >
+                            Borrar datos
+                        </button>
+                    }
+                    <input
+                        type="submit"
+                        [value]="submitBtn"
+                        [disabled]="!pedidoForm.valid"
+                        class="btn btn-primary"
+                    />
+                </div>
             </form>
         </main>
     </div>

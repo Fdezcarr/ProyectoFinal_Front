@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Login</title>
+    </head>
+
+    <body>
+        <div class="background">
+            <img
+                src="/App/src/assets/thumbnail_almacen-grande-enhanced.png"
+                alt="Imagen de fondo"
+            />
+        </div>
+
+        <div
+            class="container d-flex align-items-center justify-content-center vh-100"
+        >
+            <div class="card shadow p-4" style="width: 350px">
+                <h3 class="text-center mb-4">Iniciar sesión</h3>
+
+                <!-- Formulario de login -->
+                <form [formGroup]="ReactiveForm" (ngSubmit)="cargardatos()">
+                    <div class="mb-3">
+                        <label for="email">Correo electrónico</label>
+                        <input
+                            type="email"
+                            id="email"
+                            formControlName="Email"
+                            class="form-control"
+                            required
+                        />
+                    </div>
+                    <div class="mb-3">
+                        <label for="password">Contraseña</label>
+                        <input
+                            type="password"
+                            id="password"
+                            formControlName="Password"
+                            class="form-control"
+                            required
+                        />
+                    </div>
+                    <button type="submit" class="btn btn-warning w-100">
+                        Iniciar sesión
+                    </button>
+                </form>
+
+                <!-- Formulario de recuperación de contraseña -->
+                <form
+                    *ngIf="isForgotPassword"
+                    [formGroup]="forgotpasswordForm"
+                    (ngSubmit)="recuperarcontraseña()"
+                >
+                    <div class="mb-3">
+                        <label for="emailRecovery">Correo electrónico</label>
+                        <input
+                            type="email"
+                            id="emailRecovery"
+                            formControlName="email"
+                            class="form-control"
+                            placeholder="Ingresa tu Correo"
+                            required
+                        />
+                    </div>
+                    <button type="submit" class="btn btn-warning w-100">
+                        Recuperar contraseña
+                    </button>
+                </form>
+
+                <!-- Enlace para mostrar/ocultar formulario de "¿Olvidaste tu contraseña?" -->
+                <div class="text-center mt-3">
+                    <a
+                        href="#"
+                        class="text-primary-emphasis"
+                        (click)="toggleForgotPassword()"
+                        >¿Olvidaste tu contraseña?</a
+                    >
+                </div>
+
+                <!-- Botón para "Crear cuenta" -->
+                <div class="text-center mt-3">
+                    <button
+                        class="btn btn-secondary w-100"
+                        (click)="redirectToSignUp()"
+                    >
+                        Crear cuenta
+                    </button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+
+<link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+    crossorigin="anonymous"
+/>
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"
+></script>
