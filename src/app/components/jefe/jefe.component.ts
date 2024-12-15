@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UsuarioService } from '../../services/usuario.service';
@@ -14,38 +14,36 @@ import { Almacen } from '../../interfaces/almacen.interface';
     styleUrls: ['./jefe.component.css'],
 })
 export class JefeComponent implements OnInit {
-    usuarioService = inject(UsuarioService);
-    almacenService = inject(AlmacenService);
-
     usuarios: Usuario[] = [];
-    almacenes: Almacen[] = [];
+    almacenes: any[] = [];
     nuevoUsuario: Usuario = {
         nombre: '',
         apellido: '',
         email: '',
-        password: '',
+        password: '1234',
         rol: '',
-        almacen: null,
-        almacen_nombre: '',
-        telefono: null,
+        almacen_id: null,
     };
-
-    nuevoAlmacen: Almacen = { nombre: '', localizacion: '' };
+    nuevoAlmacen: any = { nombre: '', localizacion: '' };
     almacenSeleccionado: Almacen = null;
     usuarioSeleccionado: Usuario = null;
     emailDuplicado: boolean = false;
+
+    constructor(
+        private usuarioService: UsuarioService,
+        private almacenService: AlmacenService
+    ) {}
 
     ngOnInit(): void {
         this.cargarUsuarios();
         this.cargarAlmacenes();
     }
 
-    cargarUsuarios() {
-        this.usuarioService.getUsuarios().subscribe({
-            next: (data) => {
-                this.usuarios = data;
-            },
-        });
+    cargarUsuarios(): void {
+        this.usuarioService.getUsuarios().subscribe(
+            (data) => (this.usuarios = data),
+            (error) => console.error('Error al cargar usuarios:', error)
+        );
     }
 
     cargarAlmacenes(): void {
@@ -78,14 +76,12 @@ export class JefeComponent implements OnInit {
             return;
         }
 
-        if (!this.nuevoUsuario.almacen) {
+        if (!this.nuevoUsuario.almacen_id) {
             alert(
                 'Por favor, selecciona un almacén antes de crear el usuario.'
             );
             return;
         }
-
-        console.log(this.nuevoUsuario);
 
         this.usuarioService.crearUsuario(this.nuevoUsuario).subscribe(() => {
             this.cargarUsuarios();
@@ -93,11 +89,9 @@ export class JefeComponent implements OnInit {
                 nombre: '',
                 apellido: '',
                 email: '',
-                password: '',
+                password: '1234',
                 rol: '',
-                almacen: null,
-                almacen_nombre: '',
-                telefono: null,
+                almacen_id: null,
             };
         });
     }
@@ -113,17 +107,15 @@ export class JefeComponent implements OnInit {
         this.usuarioSeleccionado = usuario;
     }
 
-    async editarUsuario() {
-        const usuarioEditado = await this.usuarioService
+    editarUsuario() {
+        this.usuarioService
             .editarUsuario(this.usuarioSeleccionado)
             .then((response) => {
                 alert('Usuario actualizado');
-                console.log(response);
             })
             .finally(() => {
                 this.usuarioSeleccionado = null;
             });
-            
     }
 
     cargarAlmacenAEditar(almacen: Almacen) {

@@ -1,4 +1,6 @@
 import { Routes } from '@angular/router';
+import { PedidoComponent } from './components/pedido/pedido/pedido.component';
+import { FormularioPedidoComponent } from './components/pedido/formulario-pedido/formulario-pedido.component';
 import { InterfazComponent } from './pages/interfaz/interfaz.component';
 import { LoginComponent } from './pages/login/login.component';
 import { JefeComponent } from './components/jefe/jefe.component';

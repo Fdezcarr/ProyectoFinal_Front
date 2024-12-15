@@ -24,11 +24,11 @@
                     <select
                         class="form-select"
                         [(ngModel)]="nuevoPedido.origen"
-                        name="origen"
+                        [ngModelOptions]="{ standalone: true }"
                     >
                         <option
                             *ngFor="let almacen of almacenes"
-                            [value]="almacen.id"
+                            [value]="almacen.nombre"
                         >
                             {{ almacen.nombre }}
                         </option>
@@ -39,32 +39,25 @@
                     <select
                         class="form-select"
                         [(ngModel)]="nuevoPedido.destino"
-                        name="destino"
-                        (change)="destinoChange($event)"
+                        [ngModelOptions]="{ standalone: true }"
                     >
                         <option
                             *ngFor="let almacen of almacenes"
-                            [value]="almacen.id"
+                            [value]="almacen.nombre"
                         >
                             {{ almacen.nombre }}
                         </option>
                     </select>
                 </div>
-
-                    <div class="mb-3">
-                        <label for="encargado" class="form-label">Encargado</label>
-                       <input type="text" [(ngModel)]="nuevoPedido.encargado" [placeholder]="nuevoPedido.encargado_nombre" class="form-control disabled" name="encargado" disabled >
-                    </div>
                 <div class="mb-3">
                     <label for="fecha" class="form-label">Fecha</label>
                     <input
                         type="date"
                         class="form-control"
                         id="fecha"
-                        [(ngModel)]="nuevoPedido.fecha_creacion"
+                        [(ngModel)]="nuevoPedido.fecha_salida"
                         name="fecha"
                         required
-                        name="fecha_creacion"
                     />
                 </div>
                 <div class="mb-3">
@@ -112,7 +105,7 @@
                         [pedido]="pedido"
                     ></app-selector-estado>
                 </td>
-                <td>{{ pedido.fecha_creacion | date: 'short' }}</td>
+                <td>{{ pedido.fecha_salida | date: 'short' }}</td>
                 <!-- <td>
                     <button class="btn btn-sm btn-info me-2" (click)="actualizarEstado(pedido, 'En proceso')">
                         En proceso
