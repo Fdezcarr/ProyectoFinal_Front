@@ -93,7 +93,7 @@
             (ngSubmit)="editarUsuario()"
             class="col-12 col-lg-3 mb-5"
         >
-            <div class="col-md-3">
+            <div class="mb-3">
                 <input
                     [(ngModel)]="usuarioSeleccionado.nombre"
                     name="nombre"
@@ -102,7 +102,7 @@
                     required
                 />
             </div>
-            <div class="col-md-3">
+            <div class="mb-3">
                 <input
                     [(ngModel)]="usuarioSeleccionado.apellido"
                     name="apellido"
@@ -111,7 +111,7 @@
                     required
                 />
             </div>
-            <div class="col-md-3">
+            <div class="mb-3">
                 <input
                     [(ngModel)]="usuarioSeleccionado.email"
                     name="email"
@@ -123,7 +123,7 @@
                     El email ya está registrado
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="mb-3">
                 <select
                     [(ngModel)]="usuarioSeleccionado.rol"
                     name="rol"
@@ -135,7 +135,7 @@
                     <option value="operario">Operario</option>
                 </select>
             </div>
-            <div class="col-md-3">
+            <div class="mb-3">
                 <select
                     [(ngModel)]="usuarioSeleccionado.almacen_id"
                     name="almacenId"

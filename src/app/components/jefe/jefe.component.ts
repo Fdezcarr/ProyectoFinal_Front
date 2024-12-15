@@ -127,7 +127,6 @@ export class JefeComponent implements OnInit {
             this.almacenService
                 .editarAlmacen(this.almacenSeleccionado)
                 .then((response) => {
-                    console.log(response);
                 })
                 .finally(() => {
                     this.almacenSeleccionado = null;
