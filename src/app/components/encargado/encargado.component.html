@@ -17,8 +17,8 @@
                         <th>Actualizado</th>
                         <th>Operario</th>
                         <th>Matrícula</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
+                        <th class="text-center opacity-0 border-0">Estado</th>
+                        <th class="text-center opacity-0 border-start-0">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -28,23 +28,27 @@
                                 <td>{{ pedido.origen_nombre }}</td>
                                 <td>{{ pedido.destino_nombre }}</td>
                                 <td>
-                                    {{ pedido.fecha_creacion | date: 'short' }}
+                                    {{ pedido.fecha_creacion | date: 'd/MM/yyyy H:mm'
+
+ }}
                                 </td>
                                 <td>
                                     @if (pedido.fecha_modificacion && pedido.fecha_modificacion !== '') {
-                                        {{  pedido.fecha_modificacion   | date: 'short'}}
+                                        {{  pedido.fecha_modificacion   | date: 'd/MM/yyyy H:mm'
+
+}}
                                     } @else {
                                         -
                                     }
                                 </td>
                                 <td>{{ pedido.operario_nombre }}</td>
                                 <td>{{ pedido.matricula_camion }}</td>
-                                <td>
+                                <td class="text-center border-end-0">
                                     <app-selector-estado
                                         [pedido]="pedido"
                                     ></app-selector-estado>
                                 </td>
-                                <td>
+                                <td class="border-start-0">
                                     <button
                                         type="button"
                                         class="btn btn-outline-primary"
@@ -62,66 +66,6 @@
         </div>
 
 
- <!-- Pedidos pendientes -->
-        <div class="col-12 my-5 pb-3 border-bottom">
-            <h2 class="mb-3">
-                Pedidos
-                <span class="badge rounded-pill text-muted bg-warning-subtle"
-                    >DEBUG</span
-                >
-            </h2>
-            <table class="table table-bordered table-hover align-middle">
-                <thead>
-                    <tr>
-                        <th>Origen</th>
-                        <th>Destino</th>
-                        <th>Creado</th>
-                        <th>Actualizado</th>
-                        <th>Operario</th>
-                        <th>Matrícula</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @for (pedido of pedidos; track $index) {
-                       
-                            <tr>
-                                <td>{{ pedido.origen_nombre }}</td>
-                                <td>{{ pedido.destino_nombre }}</td>
-                                <td>
-                                    {{ pedido.fecha_creacion | date: 'short' }}
-                                </td>
-                                <td>
-                                    @if (pedido.fecha_modificacion && pedido.fecha_modificacion !== '') {
-                                        {{  pedido.fecha_modificacion   | date: 'short'}}
-                                    } @else {
-                                        -
-                                    }
-                                </td>
-                                <td>{{ pedido.operario_nombre }}</td>
-                                <td>{{ pedido.matricula_camion }}</td>
-                                <td>
-                                    <app-selector-estado
-                                        [pedido]="pedido"
-                                    ></app-selector-estado>
-                                </td>
-                                <td>
-                                    <button
-                                        type="button"
-                                        class="btn btn-outline-primary"
-                                    >
-                                        <i
-                                            class="fa-solid fa-magnifying-glass"
-                                        ></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        
-                    }
-                </tbody>
-            </table>
-        </div>
 
 
 
@@ -208,6 +152,73 @@
                                 </td>
                             </tr>
                         }
+                    }
+                </tbody>
+            </table>
+        </div>
+        
+ <!-- Pedidos pendientes -->
+        <div class="col-12 my-5 pb-3 border-bottom">
+            <h2 class="mb-3">
+                Todos los pedidos
+            </h2>
+            <table class="table table-bordered table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>Origen</th>
+                        <th>Destino</th>
+                        <th>Creado</th>
+                        <th>Actualizado</th>
+                        <th>Operario</th>
+                        <th>Matrícula</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (pedido of pedidos; track $index) {
+                       
+                            <tr>
+                                <td>{{ pedido.origen_nombre }}</td>
+                                <td>{{ pedido.destino_nombre }}</td>
+                                <td>
+                                    {{ pedido.fecha_creacion | date: 'short' }}
+                                </td>
+                                <td>
+                                    @if (pedido.fecha_modificacion && pedido.fecha_modificacion !== '') {
+                                        {{  pedido.fecha_modificacion   | date: 'short'}}
+                                    } @else {
+                                        -
+                                    }
+                                </td>
+                                <td>{{ pedido.operario_nombre }}</td>
+                                <td>{{ pedido.matricula_camion }}</td>
+                                <td>
+                                    <app-selector-estado
+                                        [pedido]="pedido"
+                                    ></app-selector-estado>
+                                </td>
+                                <td class="d-flex justify-content-between align-items-center">
+                                    <button
+                                        type="button"
+                                        class="btn btn-outline-primary"
+                                    >
+                                        <i
+                                            class="fa-solid fa-magnifying-glass"
+                                        ></i>
+                                    </button>
+                                    <button
+                                        type="button"
+                                        class="btn btn-outline-primary"
+                                    >
+                                        <i
+                                            class="fa-solid fa-magnifying-glass"
+                                        ></i>
+                                    </button>
+                                    
+                                </td>
+                            </tr>
+                        
                     }
                 </tbody>
             </table>

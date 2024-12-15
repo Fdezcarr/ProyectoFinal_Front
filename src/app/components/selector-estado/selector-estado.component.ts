@@ -18,9 +18,9 @@ export class SelectorEstadoComponent {
 
     async ngOnInit() {
         this.estados = await this.pedidosService.getPedidosStatus();
-        this.estadosFilter = this.estados.filter(
-            (estado: any) => estado !== this.pedido.estado
-        );
+        // this.estadosFilter = this.estados.filter(
+        //     (estado: any) => estado !== this.pedido.estado
+        // );
     }
 
     async estadoChange(event: Event) {
@@ -31,8 +31,8 @@ export class SelectorEstadoComponent {
             const result = await Swal.fire({
                 title: '¿Completar pedido?',
                 showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
+                confirmButtonColor: '#a3cfbb',
+                cancelButtonColor: '##5c636a',
                 confirmButtonText: 'Completar',
                 cancelButtonText: 'Cancelar',
             });
